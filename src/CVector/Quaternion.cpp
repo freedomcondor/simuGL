@@ -1,9 +1,20 @@
+/*----------------------------------------*/
+/*	Weixu ZHU (Harry)
+		zhuweixu_harry@126.com
+	Version 2.0
+		redesign Constructor
+*/
+/*----------------------------------------*/
+
 #include "Quaternion.h"
 #include <stdio.h>	// for sprintf in toStr, and printf
 #include <math.h>	// for sqrt
 
+#define PI 3.1415926
+
+/*-- Constructor Destructor-----------------------------*/
 Quaternion::Quaternion()
-	{ set(0,0,0,0); }
+	{ set(0,0,1,0); }
 Quaternion::Quaternion(double _x, double _y, double _z, double _w)
 	{ set(_x,_y,_z,_w); }
 Quaternion::Quaternion(const Vector3& _l, double _w)
@@ -16,28 +27,27 @@ Quaternion::~Quaternion()
 	//printf("i am a destroyer\n");
 }
 
-int Quaternion::set(double _x, double _y, double _z, double _w)
+/*-- set ----------------------------*/
+Quaternion& Quaternion::setHardValue(double _x, double _y, double _z, double _w)
 {
 	l.set(_x,_y,_z);
 	w = _w;
-	return 0;
+	return *this;
 }
 
-int Quaternion::set(const Vector3& _l, double _w)
+Quaternion& Quaternion::setHardValue(const Vector3& _l, double _w)
 {
 	l.set(_l);
 	w = _w;
-	return 0;
+	return *this;
 }
 
-int Quaternion::set(const Quaternion& _x)
+Quaternion& Quaternion::set(double _x, double _y, double _z, double _w)
 {
-	l = _x.l;
-	w = _x.w;
-	return 0;
+	return set(Vector3(_x,_y,_z),_w);
 }
 
-Quaternion& Quaternion::setFromRotation(const Vector3& _l, double _w)
+Quaternion& Quaternion::set(const Vector3& _l, double _w)
 {
 	double halfth = _w/2;
 	l = _l.nor() * sin(halfth);
@@ -45,6 +55,14 @@ Quaternion& Quaternion::setFromRotation(const Vector3& _l, double _w)
 	return *this;
 }
 
+Quaternion& Quaternion::set(const Quaternion& _x)
+{
+	l = _x.l;
+	w = _x.w;
+	return *this;
+}
+
+/*
 Quaternion& Quaternion::setFrom4Vecs(const Vector3& _abc_o,const Vector3& _pqr_o,
 							 const Vector3& _abc,  const Vector3& _pqr)
 {
@@ -71,14 +89,28 @@ Quaternion& Quaternion::setFrom4Vecs(const Vector3& _abc_o,const Vector3& _pqr_o
 	this->setFromRotation(axis,th);
 	return *this;
 }
+*/
 
-char* Quaternion::toStr()
+/*-- get axis and ang----------------------------*/
+Vector3 Quaternion::getAxis() const
 {
-	sprintf(strForMe, "(%s, %lf)",l.toStr(),w);
-	return strForMe;
+	double halfth = acos(w);
+	if (halfth == 0)
+		return Vector3(0,0,1);
+	Vector3 axis = (l / sin(halfth)).nor();
+	return axis;
+}
+double Quaternion::getAng() const
+{
+	return acos(w) * 2;
 }
 
-////////  operator  + - * / ///////////////////
+/*-- operater ----------------------------*/
+Quaternion Quaternion::operator^(double _x) const
+{
+	double th = acos(w) * 2 * _x;
+	return Quaternion(getAxis(),th);
+}
 
 Quaternion& Quaternion::operator+=(const Quaternion& _x)
 {
@@ -94,21 +126,21 @@ Quaternion& Quaternion::operator-=(const Quaternion& _x)
 	return *this;
 }
 
-Quaternion  Quaternion::operator-()
+Quaternion  Quaternion::operator-() const
 {
-	Quaternion c(0,0,0,0);
+	Quaternion c;
 	c -= *this;
 	return c;
 }
 
-Quaternion  Quaternion::operator-(const Quaternion& _x)
+Quaternion  Quaternion::operator-(const Quaternion& _x) const
 {
 	Quaternion c(*this);
 	c -= _x;
 	return c;
 }
 
-Quaternion  Quaternion::operator+(const Quaternion& _x)
+Quaternion  Quaternion::operator+(const Quaternion& _x) const
 {
 	Quaternion c(*this);
 	c += _x;
@@ -126,7 +158,7 @@ Quaternion& Quaternion::operator/=(double _x)
 	if (_x == 0)
 	{
 		printf("in Quaternion, /=, tried to divided by 0\n");
-		this->set(0,0,0,0);
+		this->set(0,0,1,0);
 		return *this;
 	}
 
@@ -135,57 +167,70 @@ Quaternion& Quaternion::operator/=(double _x)
 	return *this;
 }
 
-Quaternion Quaternion::operator*(double _x)
+Quaternion Quaternion::operator*(double _x) const
 {
 	return Quaternion(l*_x, w*_x);
 }
 
-Quaternion Quaternion::operator/(double _x)
+Quaternion Quaternion::operator/(double _x) const
 {
 	if (_x == 0)
 	{
 		printf("in Quaternion, /, tried to divided by 0\n");
-		return Quaternion(0,0,0,0);
+		return Quaternion(0,0,1,0);
 	}
 	return Quaternion(l/_x, w/_x);
 }
 
-Quaternion Quaternion::operator*(const Quaternion& _x)
+Quaternion& Quaternion::operator*=(const Quaternion& _x)
 {
-	Quaternion c((this->l * _x.l) + (this->w * _x.l) + (this->l * _x.w),
+	Quaternion c;
+	c.setHardValue((this->l * _x.l) + (this->w * _x.l) + (this->l * _x.w),
+				 (this->w * _x.w) - (this->l ^ _x.l));
+	this->l = c.l;
+	this->w = c.w;
+	return *this;
+}
+
+Quaternion Quaternion::operator*(const Quaternion& _x) const
+{
+	Quaternion c;
+	c.setHardValue((this->l * _x.l) + (this->w * _x.l) + (this->l * _x.w),
 				 (this->w * _x.w) - (this->l ^ _x.l));
 	return c;
 }
 
-//////////  len and inv  //////////////////
-double Quaternion::len()
+double Quaternion::len() const
 {
 	return sqrt(l.x * l.x + l.y * l.y + l.z * l.z +
 				w * w);
 }
 
-Quaternion Quaternion::inv()
+Quaternion Quaternion::inv() const
 {
 	double ll = len();
 	if (ll == 0)
 	{
 		printf("in Quaternion, inv(), len == 0\n");
-		return Quaternion(0,0,0,0);
+		return Quaternion(0,0,1,0);
 	}
 
 	return Quaternion(-l/ll,w/ll);
 }
 
-//////////// rotation ///////////////////
-Vector3 Quaternion::toRotate(const Vector3& _x)
+/*---------- rotation -------------*/
+Vector3 Quaternion::toRotate(const Vector3& _x) const
 {
-	/*
-	if ((l.len() == 0) && (_x == 0))
-		return _x;
-		*/
-
 	Quaternion p(_x,0);
-	Quaternion res = (*this) * p;
+	Quaternion res = Quaternion(*this) * p;
 	res = res * (this->inv());
 	return res.l;
 }
+
+/*-- for print ----------------------------*/
+char* Quaternion::toStr()
+{
+	sprintf(strForMe, "(%s, %lf)",l.toStr(),w);
+	return strForMe;
+}
+

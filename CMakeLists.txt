@@ -63,11 +63,17 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CVector/Vector3.cpp
 					src/CVector/Matrix3.cpp
 					src/CVector/Quaternion.cpp
+
+					src/CParticle/QParticle.cpp	
+					src/CParticle/Box.cpp	
 			  )
 
 include_directories(${OPENGL_INCLUDE_DIRS} 
-					${GLUT_INCLUDE_DIRS}
-					${LUA_INCLUDE_DIR}
+			${GLUT_INCLUDE_DIRS}
+			${LUA_INCLUDE_DIR}
+			src/GLTools
+			src/CVector
+			src/CParticle
 		)
 
 target_link_libraries(main 	${OPENGL_LIBRARIES} 

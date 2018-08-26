@@ -12,8 +12,8 @@
 //#define ubuntu
 //#define mac
 
-/////////////////////// OpenGL include ////////////////////
-#ifdef mac
+/*----------------- OpenGL Include -------------------------*/
+#ifdef mac		-- get from CMake
 #include<GLUT/glut.h>
 #else
 #include<GL/glut.h>
@@ -27,12 +27,12 @@
 #include<windows.h>
 #endif
 
-////////////////////////  Function include ///////////////
+/*----------------- LoopFunction Include -------------------------*/
 #include"GLTools.h"
 
 #define pi 3.1415926
-///////////////////  OpenGL ////////////////////////////
-///////////////////  openGL functions /////////////////////
+
+/*----------------- OpenGL Functions -------------------------*/
 void myDisplay(void);		
 void reshape(int w, int h);
 void myIdle(void);
@@ -50,19 +50,8 @@ void MouseMotion(int x, int y);
 void MousePassiveMotion(int x, int y);
 void Mouse(int button, int state, int x, int y);
 void MouseOperate();
-//
 
-/*			defined in function.h
-/////////////////////  drawings  /////////////////////////////////
-int drawSphere(double x, double y, double z, double r);
-int drawCube(double x, double y, double z, double half);
-int drawCylinder(	double base, double top, double height,
-				double lx,	double ly, double lz,
-				double ex,	double ey, double ez
-			);
-*/
-
-/////////////////// OpenGL Datas //////////////////////////
+/*----------------- OpenGL Datas -------------------------*/
 int KeyStates[256];				// key board states
 int KeySpecialStates[256];
 int CountIdle = 0;				// idle count for step control 
@@ -72,7 +61,7 @@ int WindowHeight, WindowWeight;	// the size of window
 int WindowHeightMiddle, WindowWeightMiddle;	// the size of window
 int WindowX, WindowY;	// the size of window
 
-		////////////////// navigation  //////////////////////
+	/*----------------- Navigations -------------------------*/
 float EyeWInit = 275, 	EyeThInit = 30, 	EyeLInit = 2.5;
 float EyeXInit = 0, 	EyeYInit = 0, 		EyeZInit = 0;
 float EyeW = EyeWInit,	EyeTh = EyeThInit,	EyeL = EyeLInit;				// all unit mm and degree
@@ -86,20 +75,23 @@ float EyeX2 = EyeX2Init,EyeY2 = EyeY2Init,	EyeZ2 = EyeZ2Init;						// all unit m
 float RotateStep = 0.500f, ScaleStep = 0.05, MoveStep = 0.03;
 //float RotateStep = 0.0300f, ScaleStep = 0.003, MoveStep = 0.001;
 
+	/*----------------- TimeStep -------------------------*/
 #define TIMESTEP
 int FrameTime = 30;	// draw frequency
 int StepTime = 30;		// step frequency
 
+	/*----------------- Pause and Vision -------------------------*/
 //int PAUSE = 1;
 int PAUSE = 0;
 
 int Vision_type = 0;			// 1 first sight, 0 third sight
 int Vision_Control = 1;			// control port 1 or 2
 
-		////////   Mouse
+	/*----------------- Mouse -------------------------*/
 int MouseNavigation = 0;
 int MouseWindowPosX, MouseWindowPosY;
 
+/*
 int rightmousedown = 0,mousestartx,mousestarty;
 GLfloat locx_mouse;
 GLfloat locy_mouse;
@@ -109,19 +101,18 @@ float w_saw,h_saw;
 float mouselocx_saw = 1,mouselocy_saw = 1;
 
 int Moving_mouse = 0;
+*/
 
-///////////////////  function definations /////////////////
-//
-//
-///////////////////////////////////////////////////////////
-
+/*-----------------------------------------------------------------*/
+/*  main start  */
+/*-----------------------------------------------------------------*/
 int main(int argc, char* argv[])
 {
 	////////////////////////////  function init ////////////////////
 	if (function_init() != 0)
 		return -1;
 	////////////////////////////  OpenGL   //////////////////////////
-	printf("\\\\\\\\\\   openGL  \\\\\\\\\\\\\\\\\n");
+	printf("----------- openGL -------------\n");
 	glutInit(&argc, argv);      
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);     
 	SystemWeight = glutGet(GLUT_SCREEN_WIDTH);		// get screen size
@@ -315,7 +306,7 @@ void myStep(int id)
 	else if (id == 1)
 	{
 		if (PAUSE == 0)
-			function_step(StepTime);	// time step in ms
+			function_step(StepTime*1.0/1000);	// StepTime in ms
 		else
 		{
 			int i = 0;	// for debug
@@ -331,7 +322,7 @@ void myIdle(void)
 	MouseOperate();
 
 	if (PAUSE == 0)
-		function_step(StepTime);
+		function_step(StepTime*1.0/1000);	//StepTime in ms
 	else
 	{
 //		int i = 0;	// for debug

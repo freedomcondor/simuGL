@@ -76,7 +76,7 @@ int Matrix3::set(const Vector3& _x,
 	return 0;
 }
 
-///////// print string ////////////////////////////////////
+/*---------------------  print string ---------------------*/
 char* Matrix3::toStr()
 {
 	sprintf(strForMe,"\n+ %lf, %lf, %lf +\n| %lf, %lf, %lf |\n+ %lf, %lf, %lf +\n",

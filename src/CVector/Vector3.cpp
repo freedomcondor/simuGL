@@ -1,39 +1,40 @@
+/*----------------------------------------*/
+/*	Weixu ZHU (Harry)
+		zhuweixu_harry@126.com
+	Version 2.0
+*/
+/*----------------------------------------*/
 #include "Vector3.h"
 #include <stdio.h>	// for sprintf in toStr and printf
 #include <math.h>	// for sqrt
 
+
+/*-- Constructor Destructor-----------------------------*/
 Vector3::Vector3()
-{
-	set(0,0,0);
-}
+	{ set(0,0,0); }
 
 Vector3::Vector3(double x, double y, double z)
-{
-	set(x,y,z);
-}
+	{ set(x,y,z); }
 
 Vector3::Vector3(const Vector3& _x)
-{
-	set(_x);
-}
+	{ set(_x); }
 
 Vector3::~Vector3()
-{
-	//printf("i am destro\n");
-}
+	{}
 
-int Vector3::set(const Vector3& _x)
-	{ x = _x.x; y = _x.y; z = _x.z; return 0; }
+/*-- set ----------------------------*/
+Vector3& Vector3::set(const Vector3& _x)
+	{ x = _x.x; y = _x.y; z = _x.z; return *this; }
 
-int Vector3::set(double _x, double _y, double _z)
+Vector3& Vector3::set(double _x, double _y, double _z)
 {
 	x = _x;
 	y = _y;
 	z = _z;
-	return 0;
+	return *this;
 }
 
-//////  operaters  ////////////////////////////////////////////////
+/*-- operator ----------------------------*/
 Vector3& Vector3::operator+=(const Vector3& _x)
 {
 	x += _x.x;
@@ -78,6 +79,7 @@ Vector3& Vector3::operator*=(double _x)
 	z *= _x;
 	return *this;
 }
+
 Vector3& Vector3::operator/=(double _x)
 {
 	if (_x == 0)
@@ -136,7 +138,7 @@ double Vector3::operator^(const Vector3& _x) const
 			this->z * _x.z;
 }
 
-////// operator  == len nor squlen //////////////////////////////
+/*-- operator  == len nor squlen -----------*/
 
 bool Vector3::operator==(const Vector3& _x) const
 {
@@ -165,12 +167,12 @@ Vector3& Vector3::makenor()
 	return *this;
 }
 
-////// printf string /////////////////////////////////////////////
+/*-- For Print -----------*/
 char* Vector3::toStr()
 {
 	sprintf(strForMe,"(%lf, %lf, %lf)",x,y,z);
 	return strForMe;
 }
 
-// a rotation nearby
+/* rotation is implemented in Quaternion */
 

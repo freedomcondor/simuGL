@@ -1,3 +1,9 @@
+/*----------------------------------------*/
+/*	Weixu ZHU (Harry)
+		zhuweixu_harry@126.com
+	Version 2.0
+*/
+/*----------------------------------------*/
 #ifndef VECTOR3
 #define VECTOR3
 class Vector3
@@ -10,8 +16,8 @@ public:
 	Vector3(const Vector3& _x);	// use Vector3 b(a);
 					// with this, a = b implicitly calls this function
 	~Vector3();
-	int set(const Vector3& _x);	// b.set(a);
-	int set(double _x, double _y, double _z);
+	Vector3& set(const Vector3& _x);	// b.set(a);
+	Vector3& set(double _x, double _y, double _z);
 
 	// operators
 	Vector3& operator+=(const Vector3& _x);
@@ -29,7 +35,7 @@ public:
 	friend Vector3 operator*(double _x,const Vector3& _y);
 	Vector3  operator*(const Vector3& _x) const;
 
-	double operator^(double _x) const;
+	double operator^(double _x) const;	// only for x^2
 	double operator^(const Vector3& _x) const;
 
 	// compare ==  /len/nor/squlen
