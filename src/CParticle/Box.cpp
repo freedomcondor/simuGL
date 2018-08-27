@@ -1,3 +1,10 @@
+/*----------------------------------------*/
+/*	Weixu ZHU (Harry)
+		zhuweixu_harry@126.com
+	Version 1.0
+*/
+/*----------------------------------------*/
+
 #include "Box.h"
 
 Box::Box():Object()

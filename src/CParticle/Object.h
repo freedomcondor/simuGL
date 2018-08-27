@@ -1,3 +1,10 @@
+/*----------------------------------------*/
+/*	Weixu ZHU (Harry)
+		zhuweixu_harry@126.com
+	Version 1.0
+*/
+/*----------------------------------------*/
+
 #ifndef OBJECT
 #define OBJECT
 
@@ -5,13 +12,15 @@
 #include "Quaternion.h"
 #include "Vector3.h"
 
+#define MAXSUBN 20
+
 struct SubObj;
 
 class Object : public QParticle
 {
 public:
 	int subN;
-	struct SubObj *subObj[20];
+	struct SubObj *subObj[MAXSUBN];
 
 	Object();
 	Object(double x,double y,double z);
@@ -19,9 +28,7 @@ public:
 	Object(const Vector3& _x, const Quaternion& _y);
 	~Object();
 
-	virtual void structDefine();
 	void reLocateSub();
-
 	int run(double time);
 	virtual void draw();
 };

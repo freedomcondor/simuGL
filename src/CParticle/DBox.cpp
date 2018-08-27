@@ -3,29 +3,51 @@
 #include <stdlib.h>
 
 #define PI 3.1415926
-DBox::DBox() : Object() {}
-DBox::DBox(double x,double y,double z) : Object(x,y,z) {}
-DBox::DBox(const Vector3& _x) : Object(_x) {}
-DBox::DBox(const Vector3& _x, const Quaternion& _y) : Object(_x,_y) {}
+DBox::DBox() : Object() {structInit();}
+DBox::DBox(double x,double y,double z) : Object(x,y,z) {structInit();}
+DBox::DBox(const Vector3& _x) : Object(_x) {structInit();}
+DBox::DBox(const Vector3& _x, const Quaternion& _y) : Object(_x,_y) {structInit();}
 
-void DBox::structDefine()
+void DBox::structInit()
 {
-				printf("i am DBox's structDefine\n");
-	subN = 2;
+	subN = 3;
 
-	subObj[0] = (struct SubObj *)malloc(sizeof(struct SubObj));
+	subObj[0] = &rLeft;
 	subObj[0]->l = Vector3(0,0.2,0);
 	subObj[0]->q = Quaternion(0,0,1,-PI/4);
-	subObj[1] = (struct SubObj *)malloc(sizeof(struct SubObj));
+	left.setSize(0.1,0.2,0.3);
+	subObj[0]->obj = &left;
+
+	subObj[1] = &rRight; 
 	subObj[1]->l = Vector3(0,-0.2,0);
 	subObj[1]->q = Quaternion(0,0,1,PI/4);
+	right.setSize(0.1,0.2,0.3);
+	subObj[1]->obj = &right;
 
-	Box *a = new Box;
-	Box *b = new Box;
-	a->setSize(0.1,0.2,0.3);
-	b->setSize(0.1,0.2,0.3);
-	subObj[0]->obj = a;
-	subObj[1]->obj = b;
+	subObj[2] = &rMiddle;
+	subObj[2]->l = Vector3(0.0,0,0);
+	subObj[2]->q = Quaternion(0,0,1,0);
+	middle.structInit();
+	subObj[2]->obj = &middle;
+
+	reLocateSub();
+}
+
+void DBox::ABox::structInit()
+{
+	subN = 2;
+
+	subObj[0] = &rUp;
+	subObj[0]->l = Vector3(0,0,0.1);
+	subObj[0]->q = Quaternion(0,0,1,0);
+	up.setSize(0.1,0.1,0.1);
+	subObj[0]->obj = &up;
+
+	subObj[1] = &rDown; 
+	subObj[1]->l = Vector3(0,0,-0.1);
+	subObj[1]->q = Quaternion(0,0,1,0);
+	down.setSize(0.1,0.1,0.1);
+	subObj[1]->obj = &down;
 
 	reLocateSub();
 }

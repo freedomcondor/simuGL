@@ -32,12 +32,9 @@ int function_exit()
 	return 0;
 }
 
-DBox a;
-Object *c = &a;
+DBox a(0.1,0,0);
 int function_init()
 {
-	c->structDefine();
-
 	a.seta(0.00,0.00,0.00);
 	a.setaq(0,0,1,PI/6);
 	return 0;
