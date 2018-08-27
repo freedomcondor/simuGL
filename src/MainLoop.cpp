@@ -17,7 +17,7 @@
 #include "Quaternion.h"
 
 #include "QParticle.h"
-#include "Box.h"
+#include "DBox.h"
 
 #define PI 3.1415926
 
@@ -32,24 +32,20 @@ int function_exit()
 	return 0;
 }
 
-Box a,b(1,1,0);
+DBox a;
+Object *c = &a;
 int function_init()
 {
-	a.setSize(0.1,0.2,0.3);
-	b.setSize(0.2,0.3,0.1);
+	c->structDefine();
 
-	a.seta(0.01,0.01,0.01);
+	a.seta(0.00,0.00,0.00);
 	a.setaq(0,0,1,PI/6);
-
-	b.setv(0,0,0.01);
-	b.setvq(0,1,1,PI/3);
 	return 0;
 }
 
 int function_step(double time)	// time in s
 {
 	a.run(time);
-	b.run(time);
 	return 0;
 }
 
@@ -57,7 +53,6 @@ int function_step(double time)	// time in s
 int function_draw()
 {
 	a.draw();
-	b.draw();
 	return 0;
 }
 
@@ -68,7 +63,7 @@ int function_draw2()
 
 /* --------------- draw obj --------------------*/
 #ifdef BOX
-int Box::draw()
+void Box::draw()
 {
 	Vector3 axis = this->q.getAxis();
 	double ang = this->q.getAng();
@@ -83,6 +78,5 @@ int Box::draw()
 	}
 	glRotatef(-ang*180/PI,axis.x,axis.y,axis.z);
 	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
-	return 0;
 }
 #endif

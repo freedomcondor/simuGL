@@ -65,7 +65,9 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CVector/Quaternion.cpp
 
 					src/CParticle/QParticle.cpp	
+					src/CParticle/Object.cpp	
 					src/CParticle/Box.cpp	
+					src/CParticle/DBox.cpp	
 			  )
 
 include_directories(${OPENGL_INCLUDE_DIRS} 

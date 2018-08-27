@@ -3,6 +3,8 @@
 		zhuweixu_harry@126.com
 	Version 2.0
 		redesign Constructor
+	Version 2.1
+		fixed some bugs of the set or Quaternion(xxx)
 */
 /*----------------------------------------*/
 

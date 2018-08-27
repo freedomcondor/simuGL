@@ -3,6 +3,8 @@
 		zhuweixu_harry@126.com
 	Version 2.0
 		combine Particle and QParticle
+	Version 2.1
+		use vector3 to denote rotation, Quaternion not valid
 */
 /*----------------------------------------*/
 
@@ -15,10 +17,9 @@ QParticle::QParticle()
 	setl(v);
 	setv(v);
 	seta(v);
-	Quaternion q(0,0,1,0);
-	setq(q);
-	setvq(q);
-	setaq(q);
+	setq(Quaternion(0,0,1,0));
+	setvq(0,0,1,0);
+	setaq(0,0,1,0);
 }
 
 QParticle::QParticle(double x,double y,double z)
@@ -27,10 +28,9 @@ QParticle::QParticle(double x,double y,double z)
 	setl(Vector3(x,y,z));
 	setv(v);
 	seta(v);
-	Quaternion q(0,0,1,0);
-	setq(q);
-	setvq(q);
-	setaq(q);
+	setq(Quaternion(0,0,1,0));
+	setvq(0,0,1,0);
+	setaq(0,0,1,0);
 }
 
 QParticle::QParticle(const Vector3& _x)
@@ -39,10 +39,9 @@ QParticle::QParticle(const Vector3& _x)
 	setl(_x);
 	setv(v);
 	seta(v);
-	Quaternion q(0,0,1,0);
-	setq(q);
-	setvq(q);
-	setaq(q);
+	setq(Quaternion(0,0,1,0));
+	setvq(0,0,1,0);
+	setaq(0,0,1,0);
 }
 
 QParticle::QParticle(double x,double y,double z, 
@@ -52,10 +51,9 @@ QParticle::QParticle(double x,double y,double z,
 	setl(Vector3(x,y,z));
 	setv(v);
 	seta(v);
-	Quaternion q(0,0,1,0);
 	setq(Quaternion(qx,qy,qz,qw));
-	setvq(q);
-	setaq(q);
+	setvq(0,0,1,0);
+	setaq(0,0,1,0);
 }
 
 QParticle::QParticle(const Vector3& _x, const Quaternion& _y)
@@ -66,8 +64,8 @@ QParticle::QParticle(const Vector3& _x, const Quaternion& _y)
 	seta(v);
 	Quaternion q(0,0,1,0);
 	setq(_y);
-	setvq(q);
-	setaq(q);
+	setvq(0,0,1,0);
+	setaq(0,0,1,0);
 }
 
 QParticle::~QParticle()
@@ -92,14 +90,20 @@ QParticle& QParticle::setq(const Quaternion& _x)
 	{ q = _x; return *this;}
 QParticle& QParticle::setq(double qx,double qy,double qz,double qw)
 	{ return setq(Quaternion(qx,qy,qz,qw));}
-QParticle& QParticle::setvq(const Quaternion& _x)
-	{ vq = _x; return *this;}
+//QParticle& QParticle::setvq(const Quaternion& _x)
+//	{ vq = _x; return *this;}
 QParticle& QParticle::setvq(double qx,double qy,double qz,double qw)
-	{ return setvq(Quaternion(qx,qy,qz,qw));}
-QParticle& QParticle::setaq(const Quaternion& _x)
-	{ aq = _x; return *this;}
+{
+	vq = Vector3(qx, qy, qz).nor() * qw;
+	return *this;
+}
+//QParticle& QParticle::setaq(const Quaternion& _x)
+//	{ aq = _x; return *this;}
 QParticle& QParticle::setaq(double qx,double qy,double qz,double qw)
-	{ return setaq(Quaternion(qx,qy,qz,qw));}
+{
+	aq = Vector3(qx, qy, qz).nor() * qw;
+	return *this;
+}
 
 /*--- getFront and Up -----------------------------*/
 Vector3 QParticle::getFront() const
@@ -121,7 +125,8 @@ int QParticle::run(double time)
 	l += v * time;
 	v += a * time;
 
-	q *= vq ^ time;
-	vq *= aq ^ time;
+	q *= Quaternion(vq, vq.len() * time);
+	vq += aq * time;
+
 	return 0;
 }

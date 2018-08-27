@@ -3,6 +3,8 @@
 		zhuweixu_harry@126.com
 	Version 2.0
 		redesign Constructor
+	Version 2.1
+		fixed some bugs of the set or Quaternion(xxx)
 */
 /*----------------------------------------*/
 
@@ -169,7 +171,9 @@ Quaternion& Quaternion::operator/=(double _x)
 
 Quaternion Quaternion::operator*(double _x) const
 {
-	return Quaternion(l*_x, w*_x);
+	Quaternion q;
+	q.setHardValue(l*_x, w*_x);
+	return q;
 }
 
 Quaternion Quaternion::operator/(double _x) const
@@ -179,7 +183,9 @@ Quaternion Quaternion::operator/(double _x) const
 		printf("in Quaternion, /, tried to divided by 0\n");
 		return Quaternion(0,0,1,0);
 	}
-	return Quaternion(l/_x, w/_x);
+	Quaternion q;
+	q.setHardValue(l/_x, w/_x);
+	return q;
 }
 
 Quaternion& Quaternion::operator*=(const Quaternion& _x)
@@ -215,13 +221,16 @@ Quaternion Quaternion::inv() const
 		return Quaternion(0,0,1,0);
 	}
 
-	return Quaternion(-l/ll,w/ll);
+	Quaternion q;
+	q.setHardValue(-l/ll,w/ll);
+	return q;
 }
 
 /*---------- rotation -------------*/
 Vector3 Quaternion::toRotate(const Vector3& _x) const
 {
-	Quaternion p(_x,0);
+	Quaternion p;
+	p.setHardValue(_x,0);
 	Quaternion res = Quaternion(*this) * p;
 	res = res * (this->inv());
 	return res.l;

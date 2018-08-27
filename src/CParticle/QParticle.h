@@ -3,6 +3,8 @@
 		zhuweixu_harry@126.com
 	Version 2.0
 		combine Particle and QParticle
+	Version 2.1
+		use vector3 to denote rotation, Quaternion not valid
 */
 /*----------------------------------------*/
 
@@ -12,11 +14,17 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 
+								#include<stdio.h>
+
+
 class QParticle
 {
 public:
 	Vector3 l,v,a;
-	Quaternion q, vq, aq;
+	Quaternion q;
+	Vector3 vq, aq;	
+	// you can't use quaternion to count rotation speed
+	// if the speed is > 2PI, there will be a problem
 
 	QParticle();
 	QParticle(double x,double y,double z);
@@ -35,9 +43,9 @@ public:
 
 	QParticle& setq(const Quaternion& _x);
 	QParticle& setq(double qx,double qy,double qz,double qw);
-	QParticle& setvq(const Quaternion& _x);
+	//QParticle& setvq(const Quaternion& _x);	not reliable
 	QParticle& setvq(double qx,double qy,double qz,double qw);
-	QParticle& setaq(const Quaternion& _x);
+	//QParticle& setaq(const Quaternion& _x);	not reliable
 	QParticle& setaq(double qx,double qy,double qz,double qw);
 
 	Vector3 getFront() const;
