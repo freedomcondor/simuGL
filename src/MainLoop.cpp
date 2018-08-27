@@ -13,11 +13,9 @@
 #include "GLTools.h"
 
 #include "Vector3.h"
-#include "Matrix3.h"
 #include "Quaternion.h"
 
-#include "QParticle.h"
-#include "DBox.h"
+#include "Manipulator.h"
 
 #define PI 3.1415926
 
@@ -32,11 +30,11 @@ int function_exit()
 	return 0;
 }
 
-DBox a(0.1,0,0);
+Manipulator a;
+
 int function_init()
 {
-	a.seta(0.00,0.00,0.00);
-	a.setaq(0,0,1,PI/6);
+	a.setPos(0.2);
 	return 0;
 }
 

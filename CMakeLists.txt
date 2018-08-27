@@ -68,6 +68,7 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CParticle/Object.cpp	
 					src/CParticle/Box.cpp	
 					src/CParticle/DBox.cpp	
+					src/Robot/Manipulator.cpp	
 			  )
 
 include_directories(${OPENGL_INCLUDE_DIRS} 
@@ -76,6 +77,7 @@ include_directories(${OPENGL_INCLUDE_DIRS}
 			src/GLTools
 			src/CVector
 			src/CParticle
+			src/Robot
 		)
 
 target_link_libraries(main 	${OPENGL_LIBRARIES} 

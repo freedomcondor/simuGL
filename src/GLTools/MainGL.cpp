@@ -175,10 +175,12 @@ void myDisplay(void)
 	glEnable(GL_DEPTH_TEST);
 
 	////////////////////   Light  ////////////////////////////
+	/*
 	float AmbientLight[4]={1,1,1,1};
 	glLightfv(GL_LIGHT0,GL_AMBIENT, AmbientLight);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
+	*/
 
 	///////////////////  start to draw  //////////////////////
 	glViewport(0,0,(float)WindowWeight,(float)WindowHeight);
