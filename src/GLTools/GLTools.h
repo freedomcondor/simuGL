@@ -21,6 +21,13 @@ extern double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
 extern double CH2,CH2_MAX,CH2_MIN,CH2_STEP;
 extern int CMDCH1;
 
+/*------------ DataLogs ------------*/
+#define MAXLOG 1000
+#define MAXDATATRACK 3
+extern int dataCount;
+extern double dataLog[MAXDATATRACK][MAXLOG];
+int drawPlot(int startx, int endx, int plotNumber);
+
 /*------------ Draw Functions -----------------------*/
 int drawSphere(double x, double y, double z, double r);
 //int drawCube(double half, double x, double y, double z,

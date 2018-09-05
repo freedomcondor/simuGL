@@ -5,6 +5,7 @@
 	
 	Version 1.0
 	Version 1.1 : change OpenGl layout
+	Version 1.2 : add drawDataLog
 
 */
 /*---------------------------------------------------------*/
@@ -17,40 +18,26 @@
 #define pi 3.1415926
 #define ZERO 0.0000001
 
-/*
-#define Max_plot 10000
-double buffer_draw2 = 0;
-double plot_y_max = 0;
-double plot_x_max = 0;
-double datalog[Max_plot];
-*/
-
-	/*
-int function_draw2()
-{
-	for (int i = 1; i <= herd.time; i++)
-	{
-		if (herd.time < plot_x_max)
-		{
-		glBegin(GL_LINES);
-			glVertex3f( (i-1)/plot_x_max,	datalog[i-1]/plot_y_max,0.0f);
-			glVertex3f(  i/plot_x_max,		datalog[i] / plot_y_max,0.0f);
-		glEnd();
-		}
-		else
-		{
-		glBegin(GL_LINES);
-			glVertex3f( 1.0*(i-1)/herd.time,	datalog[i-1]/plot_y_max,0.0f);
-			glVertex3f( 1.0* i/herd.time,		datalog[i] / plot_y_max,0.0f);
-		glEnd();
-		}
-	}
-		
-	return 0;
-}
-	*/
+double dataLog[MAXDATATRACK][MAXLOG];
+int dataCount;
+double plotXRange = 0;	// how many data per 1m when draw
+double plotYRange = 30;	// how large is 1m when draw
 
 /*------------ Draw Functions -----------------------*/
+int drawPlot(int startx, int endx, int plotNumber)
+{
+	if (plotXRange == 0) plotXRange = endx - startx + 1;
+	if (startx < 0) startx = 0;
+	for (int i = startx+1; i <= endx; i++)
+	{
+		glBegin(GL_LINES);
+			glVertex3f( (i-startx-1)/plotXRange,	dataLog[plotNumber][i-1]/plotYRange,0.0f);
+			glVertex3f( (i-startx)  /plotXRange,	dataLog[plotNumber][i] / plotYRange,0.0f);
+		glEnd();
+	}
+	return 0;
+}
+
 int drawSphere(double x, double y, double z, double r)
 {
 	glTranslatef(x,y,z);
