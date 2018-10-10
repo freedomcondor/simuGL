@@ -5,6 +5,8 @@
 	
 	Version 1.0
 	Version 1.1 : change OpenGl layout
+	Version 1.2 : add drawDataLog
+	Version 1.3 : add drawDataLog with location
 
 */
 /*---------------------------------------------------------*/
@@ -20,13 +22,15 @@
 extern double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
 extern double CH2,CH2_MAX,CH2_MIN,CH2_STEP;
 extern int CMDCH1;
+extern int CMDCH2;
 
 /*------------ DataLogs ------------*/
 #define MAXLOG 1000
-#define MAXDATATRACK 3
+#define MAXDATATRACK 6
 extern int dataCount;
 extern double dataLog[MAXDATATRACK][MAXLOG];
 int drawPlot(int startx, int endx, int plotNumber);
+int drawPlot(int startx, int endx, int plotNumber, double locx, double locy);
 
 /*------------ Draw Functions -----------------------*/
 int drawSphere(double x, double y, double z, double r);

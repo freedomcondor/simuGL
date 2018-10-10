@@ -6,6 +6,7 @@
 	Version 1.0
 	Version 1.1 : change OpenGl layout
 	Version 1.2 : add drawDataLog
+	Version 1.3 : add drawDataLog with location
 
 */
 /*---------------------------------------------------------*/
@@ -26,13 +27,23 @@ double plotYRange = 30;	// how large is 1m when draw
 /*------------ Draw Functions -----------------------*/
 int drawPlot(int startx, int endx, int plotNumber)
 {
+	return drawPlot(startx, endx, plotNumber, 0, 0);
+}
+int drawPlot(int startx, int endx, int plotNumber, double locx, double locy)
+{
 	if (plotXRange == 0) plotXRange = endx - startx + 1;
 	if (startx < 0) startx = 0;
 	for (int i = startx+1; i <= endx; i++)
 	{
 		glBegin(GL_LINES);
-			glVertex3f( (i-startx-1)/plotXRange,	dataLog[plotNumber][i-1]/plotYRange,0.0f);
-			glVertex3f( (i-startx)  /plotXRange,	dataLog[plotNumber][i] / plotYRange,0.0f);
+			glVertex3f( 	(i-startx-1)/plotXRange 			+ locx,	
+							dataLog[plotNumber][i-1]/plotYRange + locy,
+							0.0f
+					  );
+			glVertex3f( 	(i-startx)/plotXRange 				+ locx,	
+							dataLog[plotNumber][i] / plotYRange + locy,
+							0.0f
+					  );
 		glEnd();
 	}
 	return 0;
