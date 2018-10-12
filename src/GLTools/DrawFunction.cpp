@@ -19,12 +19,30 @@
 #define pi 3.1415926
 #define ZERO 0.0000001
 
+/* --------------- draw obj --------------------*/
+#include "Box.h"	// or delete line Box.cpp in CMakeList.txt
+void Box::draw()
+{
+	Vector3 axis = this->q.getAxis();
+	double ang = this->q.getAng();
+
+	glTranslatef(this->l.x, this->l.y, this->l.z);
+	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
+	if ((this->x != 0) && (this->y != 0) && (this->z != 0))
+	{
+		glScalef(this->x, this->y, this->z);
+		glutSolidCube(1);	
+		glScalef(1/this->x, 1/this->y, 1/this->z);
+	}
+	glRotatef(-ang*180/pi,axis.x,axis.y,axis.z);
+	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+}
+
+/*------------ Draw Functions -----------------------*/
 double dataLog[MAXDATATRACK][MAXLOG];
-int dataCount;
 double plotXRange = 0;	// how many data per 1m when draw
 double plotYRange = 30;	// how large is 1m when draw
 
-/*------------ Draw Functions -----------------------*/
 int drawPlot(int startx, int endx, int plotNumber)
 {
 	return drawPlot(startx, endx, plotNumber, 0, 0);

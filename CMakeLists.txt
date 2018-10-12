@@ -69,6 +69,9 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CParticle/Box.cpp	
 					src/CParticle/DBox.cpp	
 					src/Robot/Manipulator.cpp	
+
+					src/CWorld/ChessWorld.cpp	
+					src/CellularAutomaton/CellularAutomaton.cpp
 			  )
 
 include_directories(${OPENGL_INCLUDE_DIRS} 
@@ -78,6 +81,8 @@ include_directories(${OPENGL_INCLUDE_DIRS}
 			src/CVector
 			src/CParticle
 			src/Robot
+			src/CWorld
+			src/CellularAutomaton
 		)
 
 target_link_libraries(main 	${OPENGL_LIBRARIES} 
