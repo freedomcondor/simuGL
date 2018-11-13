@@ -39,6 +39,29 @@ void Box::draw()
 	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
 }
 
+#include "Sphere.h"	// or delete line Box.cpp (any cpp with #include "Sphere.h") in CMakeList.txt
+void Sphere::draw()
+{
+	glTranslatef(this->l.x, this->l.y, this->l.z);
+	if (this->r != 0)
+		glutSolidSphere(r, 8, 8); 	// slices for longitude and latitude
+	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+}
+
+#include "CellularAutomaton.h"	// or delete line Box.cpp (any cpp with #include "CellularAutomaton.h") in CMakeList.txt
+int CellularAutomaton::draw(int x, int y, int z, int xl, int yl, int zl)
+{
+	double length = 0.01;
+	for (int i = x; i < x+xl; i++)
+		for (int j = y; j < y+yl; j++)
+			for (int k = z; k < z+zl; k++)
+				if (world->get(i,j,k) > 0.5)
+					drawCube(length*0.95, i * length, j*length, k*length,
+					                      1,          0,        0,
+					                      0,          0,        1);
+
+	return 0;
+}
 /*------------ Draw Functions -----------------------*/
 double dataLog[MAXDATATRACK][MAXLOG];
 double plotXRange = 0;	// how many data per 1m when draw

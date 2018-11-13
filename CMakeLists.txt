@@ -67,6 +67,7 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CParticle/QParticle.cpp	
 					src/CParticle/Object.cpp	
 					src/CParticle/Box.cpp	
+					src/CParticle/Sphere.cpp	
 					src/CParticle/DBox.cpp	
 					src/Robot/Manipulator.cpp	
 
