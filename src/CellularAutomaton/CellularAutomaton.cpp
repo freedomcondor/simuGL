@@ -24,15 +24,15 @@ int CellularAutomaton::run(int x, int y, int z, int xl, int yl, int zl)
 			for (int k = z; k < z+zl; k++)
 			{
 				if ( (world->get(i-1,j,k) > 0.5) ||
-				     (world->get(i,j-1,k) > 0.5) ||
-				     (world->get(i+1,j,k) > 0.5) ||
+				     //(world->get(i,j-1,k) > 0.5) ||
+				     //(world->get(i+1,j,k) > 0.5) ||
 				     (world->get(i,j+1,k) > 0.5))
 					nextworld->set(i,j,k,1);
 				else 
 					nextworld->set(i,j,k,0);
 				if ( (world->get(i-1,j-1,k) > 0.5) ||
-				     (world->get(i+1,j-1,k) > 0.5) ||
-				     (world->get(i-1,j+1,k) > 0.5) ||
+				     //(world->get(i+1,j-1,k) > 0.5) ||
+				     //(world->get(i-1,j+1,k) > 0.5) ||
 				     (world->get(i+1,j+1,k) > 0.5) )
 					nextworld->set(i,j,k,0);
 			}

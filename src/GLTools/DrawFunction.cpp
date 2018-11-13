@@ -7,6 +7,7 @@
 	Version 1.1 : change OpenGl layout
 	Version 1.2 : add drawDataLog
 	Version 1.3 : add drawDataLog with location
+	Version 1.4 : move Box::draw here
 
 */
 /*---------------------------------------------------------*/
@@ -20,7 +21,7 @@
 #define ZERO 0.0000001
 
 /* --------------- draw obj --------------------*/
-#include "Box.h"	// or delete line Box.cpp in CMakeList.txt
+#include "Box.h"	// or delete line Box.cpp (any cpp with #include "Box.h") in CMakeList.txt
 void Box::draw()
 {
 	Vector3 axis = this->q.getAxis();
