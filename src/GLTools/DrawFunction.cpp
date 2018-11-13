@@ -4,10 +4,12 @@
    		zhuweixu_harry@126.com
 	
 	Version 1.0
-	Version 1.1 : change OpenGl layout
-	Version 1.2 : add drawDataLog
-	Version 1.3 : add drawDataLog with location
-	Version 1.4 : move Box::draw here
+	Version 1.1 : 	change OpenGl layout
+	Version 1.2 : 	add drawDataLog
+	Version 1.3 : 	add drawDataLog with location
+	Version 1.4 : 	move Box::draw here
+	Version 1.5 : 	add Sphere::draw draw
+					move CellularAutomaton:draw here
 
 */
 /*---------------------------------------------------------*/
