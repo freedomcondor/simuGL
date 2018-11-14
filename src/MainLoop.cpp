@@ -16,6 +16,7 @@
 #include "Quaternion.h"
 
 #include "Sphere.h"
+#include "Cylinder.h"
 
 /*------------ Function Control Channels ------------*/
 double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
@@ -24,6 +25,7 @@ int CMDCH1;
 
 Sphere a(1,1,0);
 Sphere b(0,0,0);
+Cylinder c(-1,0,0);
 
 /* --------------- MainLoop functions --------------------*/
 int function_exit()
@@ -35,11 +37,15 @@ int function_init()
 {
 	a.setSize(0.1);
 	b.setSize(0.2);
+	c.setSize(0.1,0.3);
+
+	c.setvq(0,1,0,3.14);
 	return 0;
 }
 
 int function_step(double time)	// time in s
 {
+	c.run(time);
 	return 0;
 }
 
@@ -48,6 +54,7 @@ int function_draw()
 {
 	a.draw();
 	b.draw();
+	c.draw();
 	return 0;
 }
 

@@ -8,8 +8,9 @@
 	Version 1.2 : 	add drawDataLog
 	Version 1.3 : 	add drawDataLog with location
 	Version 1.4 : 	move Box::draw here
-	Version 1.5 : 	add Sphere::draw draw
+	Version 1.5 : 	add Sphere::draw
 					move CellularAutomaton:draw here
+	Version 1.6 : 	add Cylinder::draw
 
 */
 /*---------------------------------------------------------*/
@@ -47,6 +48,26 @@ void Sphere::draw()
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	if (this->r != 0)
 		glutSolidSphere(r, 8, 8); 	// slices for longitude and latitude
+	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+}
+
+#include "Cylinder.h"	// or delete line Box.cpp (any cpp with #include "Cylinder.h") in CMakeList.txt
+void Cylinder::draw()
+{
+	GLUquadricObj *quadratic;
+	quadratic = gluNewQuadric();
+
+	Vector3 axis = this->q.getAxis();
+	double ang = this->q.getAng();
+	glTranslatef(this->l.x, this->l.y, this->l.z);
+	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
+	if ((this->r != 0) && (this->h != 0))
+	{
+		glScalef(this->r, this->r, this->h);
+		gluCylinder(quadratic,1,1,1, 32,32);
+		glScalef(1/this->r, 1/this->r, 1/this->h);
+	}
+	glRotatef(-ang*180/pi,axis.x,axis.y,axis.z);
 	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
 }
 
