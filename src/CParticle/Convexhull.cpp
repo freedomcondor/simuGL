@@ -47,5 +47,12 @@ int Convexhull::setPoint(int _x, double _points[])
 		points[j].y = _points[i++];
 		points[j].z = _points[i++];
 	}
+
+	computeHull();
+	return 0;
+}
+
+int Convexhull::computeHull()
+{
 	return 0;
 }

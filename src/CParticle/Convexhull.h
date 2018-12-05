@@ -24,6 +24,9 @@ public:
 
 	int setPoint(int _x, double _points[]);
 	//void draw();	// implement in openGL
+	
+private:
+	int computeHull();
 };
 
 #endif

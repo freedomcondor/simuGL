@@ -4,7 +4,7 @@
    		zhuweixu_harry@126.com
 	
 	Version 1.0
-
+	Version 1.1 : clean the code a little bit
 */
 /*---------------------------------------------------------*/
 
@@ -55,10 +55,10 @@ void MouseOperate();
 int KeyStates[256];				// key board states
 int KeySpecialStates[256];
 int CountIdle = 0;				// idle count for step control 
-int SystemWeight, SystemHeight;	// the size of screen
-int SystemWeightMiddle, SystemHeightMiddle;
-int WindowHeight, WindowWeight;	// the size of window
-int WindowHeightMiddle, WindowWeightMiddle;	// the size of window
+int Systemwidth, SystemHeight;	// the size of screen
+int SystemwidthMiddle, SystemHeightMiddle;
+int WindowHeight, Windowwidth;	// the size of window
+int WindowHeightMiddle, WindowwidthMiddle;	// the size of window
 int WindowX, WindowY;	// the size of window
 
 	/*----------------- Navigations -------------------------*/
@@ -108,24 +108,24 @@ int Moving_mouse = 0;
 /*-----------------------------------------------------------------*/
 int main(int argc, char* argv[])
 {
-	////////////////////////////  function init ////////////////////
+	//------------------ function init --------------------//
 	if (function_init() != 0)
 		return -1;
-	////////////////////////////  OpenGL   //////////////////////////
-	printf("----------- openGL -------------\n");
+	//-------------------  OpenGL -------------------------//
+	printf("----------- openGL -----------------\n");
 	glutInit(&argc, argv);      
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);     
-	SystemWeight = glutGet(GLUT_SCREEN_WIDTH);		// get screen size
+	Systemwidth = glutGet(GLUT_SCREEN_WIDTH);		// get screen size
 	SystemHeight = glutGet(GLUT_SCREEN_HEIGHT);
-	printf("System Screen size : %d %d\n",SystemWeight,SystemHeight);
+	printf("System Screen size : %d %d\n",Systemwidth,SystemHeight);
 	WindowHeight = SystemHeight / 2; 
-	WindowWeight = SystemWeight / 2;
-	SystemWeightMiddle = WindowWeight / 2;
+	Windowwidth = Systemwidth / 2;
+	SystemwidthMiddle = Windowwidth / 2;
 	SystemHeightMiddle = WindowHeight / 2;
 
 	WindowX = 0, WindowY = 0;	// the position of window
 	glutInitWindowPosition(WindowX, WindowY);     
-	glutInitWindowSize(WindowWeight, WindowHeight);      
+	glutInitWindowSize(Windowwidth, WindowHeight);      
 	glutCreateWindow("Simulator");     
 
 	glutDisplayFunc(myDisplay);     
@@ -155,38 +155,36 @@ int main(int argc, char* argv[])
 	EyeX2 = 1;
 	//EyeY2 = 1;
 
-	////////////////////////////  Main Loop   //////////////////////////
+	//------------------ glut Main Loop -------------------//
+	printf("----------- opengl begins ----------\n");
 	glutMainLoop();     
 	return 0;
 }
 
-//////////////////// OpenGL Functions ////////////////////////////
-//
+//------------------------ OpenGL Functions -------------------------//
 void myDisplay(void)
 {
 	GLfloat half;
 	
-	/////////////////////  view port 1  //////////////////////////////
-	////////////////////   Backgroud  ////////////////////
+	//------------------------------- view port 1  -----------------------------------//
+	//-------- Backgroud -------//
 	//glClearColor(0.0f,0.0f,0.0f,1.0f);     	//black
 	glClearColor(1.0f,1.0f,1.0f,1.0f);     		//white
-	////////////////////   Depth    ////////////////////
+	//-------- Depth -----------//
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     
 	glEnable(GL_DEPTH_TEST);
 
-	////////////////////   Light  ////////////////////////////
-	/*
+	//-------- Light -----------//
 	float AmbientLight[4]={1,1,1,1};
 	glLightfv(GL_LIGHT0,GL_AMBIENT, AmbientLight);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
-	*/
 
-	///////////////////  start to draw  //////////////////////
-	glViewport(0,0,(float)WindowWeight,(float)WindowHeight);
+	//------  start to draw ----//
+	glViewport(0,0,(float)Windowwidth,(float)WindowHeight);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60,(float)WindowWeight/(float)WindowHeight,0.1f,10000.f);
+	gluPerspective(60,(float)Windowwidth/(float)WindowHeight,0.1f,10000.f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();     
 
@@ -194,7 +192,7 @@ void myDisplay(void)
 
 	eyew = EyeW * pi / 180;
 	eyeth = EyeTh * pi / 180;
-	if (Vision_type == 0)
+	if (Vision_type == 0)	// 1st/3rd vision
 	{
 		eyex = EyeL * cos(eyeth) * cos(eyew) + EyeX;
 		eyey = EyeL * cos(eyeth) * sin(eyew) + EyeY;
@@ -210,7 +208,7 @@ void myDisplay(void)
 	}
 	//gluLookAt(0,0,1,0.0,0.0,0.0,0.0,1.0,0);
 
-	//////////////////////////////// rec frame ////////////////////////
+	//---------------- rec frame ------------------//
 	//GLfloat half;
 	half = 1.0f;
 
@@ -239,22 +237,16 @@ void myDisplay(void)
 	glVertex3f(0,0,0.0f);
 	glVertex3f(0,half/2,0);
 	glEnd();
-	//////////////////////////////// rec frame end ////////////////////////
 	
-	//////////////////// function draw  //////////////////////////////////
-	//
-	//function_draw();
-	function_draw();
-	//
-	//////////////////// function draw end ///////////////////////////////
-
+	//----------------- function draw ----------------//
+	function_draw();											//   <-- the draw function
 	
-	//////////////////// view port 2 ////////////////////////////////////////////////////
-	///////////////////  start to draw  /////////////////////
-	glViewport(0,0,WindowWeight/4,WindowHeight/4);
+	//------------------------------- view port 2  -----------------------------------//
+	//------  start to draw ----//
+	glViewport(0,0,Windowwidth/4,WindowHeight/4);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60,(float)WindowWeight/(float)WindowHeight,0.1f,10000.f);
+	gluPerspective(60,(float)Windowwidth/(float)WindowHeight,0.1f,10000.f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();     
 
@@ -265,7 +257,7 @@ void myDisplay(void)
 	eyez = EyeL2 * sin(eyeth) + EyeZ2;
 	gluLookAt(eyex,eyey,eyez, EyeX2,EyeY2,EyeZ2, 0.0,0.0,1);
 
-	//////////////////////////////// rec frame ////////////////////////
+	//---------------- rec frame ------------------//
 	//GLfloat half;
 	half = 1.0f;
 
@@ -282,14 +274,11 @@ void myDisplay(void)
 	glVertex3f(0,0,0.0f);
 	glVertex3f(0,0,half);
 	glEnd();
-	//////////////////////////////// rec frame end ////////////////////////
-	//////////////////// function draw  //////////////////////////////////
-	//
-	function_draw2();
-	//
-	//////////////////// function draw end ///////////////////////////////
-	//////////////////// view port 2 end ////////////////////////////////////
 
+	//----------------- function draw ----------------//
+	function_draw2();											//   <-- the draw function
+
+	//------------ finish and swap buffer ------------//
 	glFlush();
 	glutSwapBuffers();
 }
@@ -334,10 +323,9 @@ void myIdle(void)
 }
 #endif
 
-
 void reshape(int w, int h)
 {
-	WindowHeight = h; WindowWeight = w;
+	WindowHeight = h; Windowwidth = w;
 
 	/*
 	glViewport(0,0,(GLsizei)w,(GLsizei)h);
@@ -348,7 +336,7 @@ void reshape(int w, int h)
 	*/
 }
 
-////////////////////////////  Key Board  //////////////////////
+//----------------------- Key Board ---------------------- //
 void SpecialKeys(int key, int x, int y)
 {
 	KeySpecialStates[key] = 1;
@@ -362,7 +350,6 @@ void SpecialUpKeys(int key, int x, int y)
 void SpecialKeysOperate()
 {
 	float step = RotateStep, Lstep = ScaleStep;
-	//if (key == GLUT_KEY_UP)
 	if (KeySpecialStates[GLUT_KEY_UP] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -382,7 +369,6 @@ void SpecialKeysOperate()
 			if (EyeTh2 < 90)
 				EyeTh2 += step;
 	}
-	//if (key == GLUT_KEY_DOWN)
 	if (KeySpecialStates[GLUT_KEY_DOWN] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -402,7 +388,6 @@ void SpecialKeysOperate()
 			if (EyeTh2 > -90)
 				EyeTh2 -= step;
 	}
-	//if (key == GLUT_KEY_LEFT)
 	if (KeySpecialStates[GLUT_KEY_LEFT] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -419,7 +404,6 @@ void SpecialKeysOperate()
 	    if (Vision_Control == 2)
 			EyeW2 -= step;
 	}
-	//if (key == GLUT_KEY_RIGHT)
 	if (KeySpecialStates[GLUT_KEY_RIGHT] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -436,8 +420,6 @@ void SpecialKeysOperate()
 	    if (Vision_Control == 2)
 			EyeW2 += step;
 	}
-
-	//if (key == GLUT_KEY_PAGE_UP)
 	if (KeySpecialStates[GLUT_KEY_PAGE_UP] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -445,7 +427,6 @@ void SpecialKeysOperate()
 	    if (Vision_Control == 2)
 			EyeL2 -= Lstep;
 	}
-	//if (key == GLUT_KEY_PAGE_DOWN)
 	if (KeySpecialStates[GLUT_KEY_PAGE_DOWN] == 1)
 	{
 	    if (Vision_Control == 1)
@@ -474,7 +455,7 @@ void BoardUpKeys(unsigned char key, int x, int y)
 void BoardKeysOperate()
 {
 	float mstep = MoveStep;
-	//////////////////////// Vision contorl /////////////////
+	//--------------------- Vision contorl -------------------//
 	//if (key == 'q')				// switch port
 	if (KeyStates['q'] == 1)				// switch port
 	{
@@ -488,7 +469,7 @@ void BoardKeysOperate()
 		KeyStates['v'] = 0;
 	}
 
-	//////////////////////// navigation /////////////////////
+	//-------------------- navigation -----------------------//
 	//if (key == 'w')
 	if (KeyStates['w'] == 1)		
 	{
@@ -533,11 +514,10 @@ void BoardKeysOperate()
 		KeyStates['r'] = 0;
 	}
 
-	//////////////////// control ///////////////////////
+	//-------------------- control -------------------//
 	if (KeyStates['x'] == 1)		
 	{
 	}
-	//if (key == 'n')
 	if (KeyStates['m'] == 1)		
 	{
 		MouseNavigation = 1 - MouseNavigation;
@@ -545,14 +525,14 @@ void BoardKeysOperate()
 		{
 			//WindowX = glutGet(GLUT_WINDOW_X);		// get window pos
 			//WindowY = glutGet(GLUT_WINDOW_Y);
-			//SystemWeightMiddle = WindowX + WindowWeight / 2;	// set window middle
+			//SystemwidthMiddle = WindowX + Windowwidth / 2;	// set window middle
 			//SystemHeightMiddle = WindowY + WindowHeight / 2;
-			WindowWeightMiddle = WindowWeight / 2;
+			WindowwidthMiddle = Windowwidth / 2;
 			WindowHeightMiddle = WindowHeight / 2;
 
-			//SetCursorPos(SystemWeightMiddle, SystemHeightMiddle); // windows only
-			glutWarpPointer(WindowWeightMiddle , WindowHeightMiddle );
-			MouseWindowPosX = WindowWeightMiddle;
+			//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
+			glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );
+			MouseWindowPosX = WindowwidthMiddle;
 			MouseWindowPosY = WindowHeightMiddle;
 
 			glutSetCursor(GLUT_CURSOR_NONE);
@@ -580,7 +560,8 @@ void BoardKeysOperate()
 		function_exit();
 		exit(0);					// windows or linux or mac
 	}
-	/////////////  control channel
+
+	//--------------  control channel ---------------//
 	if (KeyStates['j'] == 1)		
 	{
 		if (CH1 + CH1_STEP < CH1_MAX)
@@ -609,7 +590,8 @@ void BoardKeysOperate()
 	}
 }
 
-/////////////////////////  mouse //////////////////////////////
+//--------------------------- mouse --------------------------------//
+// TODO: 
 void MouseOperate()
 {
 	float step = RotateStep, Lstep = ScaleStep;
@@ -627,7 +609,7 @@ void MouseOperate()
 
 		//printf("%d %d\n",p.x,p.y);
 
-		x -= WindowWeightMiddle;
+		x -= WindowwidthMiddle;
 		y -= WindowHeightMiddle;
 
 		if (Vision_type == 0)
@@ -645,8 +627,8 @@ void MouseOperate()
 			if (EyeTh < -89.9) EyeTh = -89.9;
 		}	
 
-		//SetCursorPos(SystemWeightMiddle, SystemHeightMiddle); // windows only
-		glutWarpPointer(WindowWeightMiddle , WindowHeightMiddle );
+		//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
+		glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );
 	}
 }
 
@@ -678,12 +660,12 @@ void MouseMotion(int x, int y)
 		vert = y - mousestarty;
 		if (Vision_Control == 1)
 		{
-			EyeY += hori * 0.5 /WindowWeight;
+			EyeY += hori * 0.5 /Windowwidth;
 			EyeX += vert * 0.5 /WindowHeight;
 		}
 		if (Vision_Control == 2)
 		{
-			EyeX2 -= hori * 0.5 /WindowWeight;
+			EyeX2 -= hori * 0.5 /Windowwidth;
 			EyeY2 += vert * 0.5 /WindowHeight;
 		}
 	}
@@ -698,74 +680,3 @@ void MousePassiveMotion(int x, int y)
 	MouseWindowPosX = x;
 	MouseWindowPosY = y;
 }
-
-
-
-/*            defined in function.cpp
-////////////////////////////// drawings  /////////////////////////
-int drawSphere(double x, double y, double z, double r)
-{
-	glTranslatef(x,y,z);
-	glutSolidSphere(r,10,10);
-	glTranslatef(-x,-y,-z);
-
-	return 0;
-}
-
-int drawCube(double x, double y, double z, double half)
-{
-	glTranslatef(x,y,z);
-	glutSolidCube(half);
-	glTranslatef(-x,-y,-z);
-
-	return 0;
-}
-
-int drawCylinder(	double base, double top, double height,
-				double lx,	double ly, double lz,
-				double ex,	double ey, double ez
-			)
-{
-	double xaxis,yaxis,zaxis,angleaxis;
-	double xbase,ybase,zbase;
-	double e;
-	int rotateflag = 1;
-	GLUquadricObj *quadratic;
-	double error = 0.001;
-
-	quadratic = gluNewQuadric();
-
-	//printf("l: %lf %lf %lf\n",lx,ly,lz);
-	//printf("e: %lf %lf %lf\n",ex,ey,ez);
-
-	if (((ex-0)*(ex-0)<error) && ((ey-0)*(ey-0)<error) && ((ez-1)*(ez-1)<error))
-		rotateflag = 0;
-
-	if (rotateflag == 1)
-	{
-		e = sqrt(ex * ex + ey * ey + ez * ez);
-		if (e == 0) return -1;
-
-		xbase = 0; ybase = 0; zbase = 1;
-		xaxis = ybase * ez - zbase * ey;
-		yaxis = zbase * ex - xbase * ez;
-		zaxis = xbase * ey - ybase * ex;
-		angleaxis = acos((xbase*ex+ybase*ey+zbase*ez)/e) + pi;
-
-		//printf("%lf %lf %lf %lf\n",angleaxis,xaxis,yaxis,zaxis);
-
-	}
-
-	glTranslatef(lx,ly,lz);
-
-	if (rotateflag == 1)
-		glRotatef(angleaxis*180/pi,xaxis,yaxis,zaxis);
-
-	gluCylinder(quadratic,base,top,height,32,32);//»­Ô²Öù	base top height
-	if (rotateflag == 1)
-		glRotatef(-angleaxis*180/pi,xaxis,yaxis,zaxis);
-
-	glTranslatef(-lx,-ly,-lz);
-	return 0;
-}
-*/

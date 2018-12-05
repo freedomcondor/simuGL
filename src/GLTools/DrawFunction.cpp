@@ -11,6 +11,7 @@
 	Version 1.5 : 	add Sphere::draw
 					move CellularAutomaton:draw here
 	Version 1.6 : 	add Cylinder::draw
+	Version 1.6.1 : add a todo mark
 
 */
 /*---------------------------------------------------------*/
@@ -36,7 +37,7 @@ void Box::draw()
 	{
 		glScalef(this->x, this->y, this->z);
 		glutSolidCube(1);	
-		glScalef(1/this->x, 1/this->y, 1/this->z);
+		glScalef(1/this->x, 1/this->y, 1/this->z);	//TODO: push / pop glmatrix
 	}
 	glRotatef(-ang*180/pi,axis.x,axis.y,axis.z);
 	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
