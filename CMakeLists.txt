@@ -68,7 +68,8 @@ add_executable(main src/GLTools/MainGL.cpp
 					src/CParticle/Object.cpp	
 					src/CParticle/Box.cpp	
 					src/CParticle/Sphere.cpp	
-					src/CParticle/Cylinder.cpp	
+					src/CParticle/Cylinder.cpp
+					src/CParticle/Convexhull.cpp
 					src/CParticle/DBox.cpp	
 
 					src/Robot/Manipulator.cpp	
