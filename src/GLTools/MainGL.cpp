@@ -5,6 +5,7 @@
 	
 	Version 1.0
 	Version 1.1 : clean the code a little bit
+	Version 1.2 : find a little bug when key 'n' is pressed
 */
 /*---------------------------------------------------------*/
 
@@ -77,8 +78,8 @@ float RotateStep = 0.500f, ScaleStep = 0.05, MoveStep = 0.03;
 
 	/*----------------- TimeStep -------------------------*/
 #define TIMESTEP
-int FrameTime = 30;	// draw frequency
-int StepTime = 30;		// step frequency
+int FrameTime = 30;	// draw frequency in ms
+int StepTime = 30;		// step frequency in ms
 
 	/*----------------- Pause and Vision -------------------------*/
 int PAUSE = 1;
@@ -546,7 +547,7 @@ void BoardKeysOperate()
 	}
 	if (KeyStates['n'] == 1)		
 	{
-		function_step(StepTime);
+		function_step(StepTime*1.0/1000);
 		KeyStates['n'] = 0;
 	}
 	if (KeyStates['p'] == 1)		
