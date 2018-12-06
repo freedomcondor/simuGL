@@ -15,6 +15,7 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 
+#include "Box.h"
 #include "Sphere.h"
 #include "Cylinder.h"
 #include "Convexhull.h"
@@ -25,7 +26,7 @@ double CH2,CH2_MAX,CH2_MIN,CH2_STEP;
 int CMDCH1;
 
 Sphere a(1,1,0);
-Sphere b(0,0,0);
+Box b(0,0,0);
 Cylinder c(-1,0,0);
 Convexhull d(0.5, 0.5, 0.5);
 
@@ -38,7 +39,7 @@ int function_exit()
 int function_init()
 {
 	a.setSize(0.1);
-	b.setSize(0.2);
+	b.setSize(0.2, 0.2, 0.2);
 	c.setSize(0.1,0.3);
 	double points[] = {
 		0.1, 0.2, 0.3,

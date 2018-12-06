@@ -1,6 +1,12 @@
+/*---------------------------
+	Weixu Zhu 
+		zhuweixu_harry@126.com
+	Version 1.1 : fixed constructor problem in mac
+ *--------------------------- */
 #include "ChessWorld.h"
 
-ChessWorld::ChessWorld()
+ChessWorld::ChessWorld() :
+	aworld(-50,-50,-50)
 {
 }
 

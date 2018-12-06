@@ -1,3 +1,8 @@
+/*---------------------------
+	Weixu Zhu 
+		zhuweixu_harry@126.com
+	Version 1.1 : fixed constructor problem in mac
+ *--------------------------- */
 #ifndef CHESSWORLD
 #define CHESSWORLD
 
@@ -42,7 +47,7 @@ class ChessWorld
 			data[x-xS][y-yS][z-zS] = value;
 			return 0;
 		}
-	} aworld{-50,-50,-50};
+	} aworld;
 
 public:
 	ChessWorld();

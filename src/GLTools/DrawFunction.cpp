@@ -12,6 +12,7 @@
 					move CellularAutomaton:draw here
 	Version 1.6 : 	add Cylinder::draw
 	Version 1.6.1 : add a todo mark
+	Version 1.6.2 : use push/pop matrix in drawBox ..
 
 */
 /*---------------------------------------------------------*/
@@ -31,25 +32,25 @@ void Box::draw()
 	Vector3 axis = this->q.getAxis();
 	double ang = this->q.getAng();
 
+	glPushMatrix();
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
 	if ((this->x != 0) && (this->y != 0) && (this->z != 0))
 	{
 		glScalef(this->x, this->y, this->z);
-		glutSolidCube(1);	
-		glScalef(1/this->x, 1/this->y, 1/this->z);	//TODO: push / pop glmatrix
+		glutSolidCube(1);	//TODO: make cube
 	}
-	glRotatef(-ang*180/pi,axis.x,axis.y,axis.z);
-	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+	glPopMatrix();
 }
 
 #include "Sphere.h"	// or delete line Box.cpp (any cpp with #include "Sphere.h") in CMakeList.txt
 void Sphere::draw()
 {
+	glPushMatrix();
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	if (this->r != 0)
 		glutSolidSphere(r, 8, 8); 	// slices for longitude and latitude
-	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+	glPopMatrix();
 }
 
 #include "Cylinder.h"	// or delete line Box.cpp (any cpp with #include "Cylinder.h") in CMakeList.txt
@@ -60,16 +61,15 @@ void Cylinder::draw()
 
 	Vector3 axis = this->q.getAxis();
 	double ang = this->q.getAng();
+	glPushMatrix();
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
 	if ((this->r != 0) && (this->h != 0))
 	{
 		glScalef(this->r, this->r, this->h);
 		gluCylinder(quadratic,1,1,1, 32,32);
-		glScalef(1/this->r, 1/this->r, 1/this->h);
 	}
-	glRotatef(-ang*180/pi,axis.x,axis.y,axis.z);
-	glTranslatef(-this->l.x, -this->l.y, -this->l.z);
+	glPopMatrix();
 }
 
 #include "CellularAutomaton.h"	// or delete line Box.cpp (any cpp with #include "CellularAutomaton.h") in CMakeList.txt
