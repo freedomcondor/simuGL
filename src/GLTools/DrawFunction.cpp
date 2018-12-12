@@ -9,11 +9,11 @@
 	Version 1.3 : 	add drawDataLog with location
 	Version 1.4 : 	move Box::draw here
 	Version 1.5 : 	add Sphere::draw
-					move CellularAutomaton:draw here
+	             	move CellularAutomaton:draw here
 	Version 1.6 : 	add Cylinder::draw
 	Version 1.6.1 : add a todo mark
 	Version 1.6.2 : use push/pop matrix in drawBox ..
-
+	Version 1.6.3 : add round covers for Cylinder, 32 slices for Sphere
 */
 /*---------------------------------------------------------*/
 
@@ -38,7 +38,7 @@ void Box::draw()
 	if ((this->x != 0) && (this->y != 0) && (this->z != 0))
 	{
 		glScalef(this->x, this->y, this->z);
-		glutSolidCube(1);	//TODO: make cube
+		glutSolidCube(1);
 	}
 	glPopMatrix();
 }
@@ -49,7 +49,7 @@ void Sphere::draw()
 	glPushMatrix();
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	if (this->r != 0)
-		glutSolidSphere(r, 8, 8); 	// slices for longitude and latitude
+		glutSolidSphere(r, 32, 32); 	// slices for longitude and latitude
 	glPopMatrix();
 }
 
@@ -66,8 +66,21 @@ void Cylinder::draw()
 	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
 	if ((this->r != 0) && (this->h != 0))
 	{
+		int slices = 32;
+
 		glScalef(this->r, this->r, this->h);
-		gluCylinder(quadratic,1,1,1, 32,32);
+		gluCylinder(quadratic,1,1,1, slices, slices);
+
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < slices; i++)
+			glVertex3f(cos(2*pi/slices*i),sin(2*pi/slices*i),0);
+		glEnd();
+
+		glTranslatef(0, 0, 1);
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < slices; i++)
+			glVertex3f(cos(2*pi/slices*i),sin(2*pi/slices*i),0);
+		glEnd();
 	}
 	glPopMatrix();
 }

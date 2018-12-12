@@ -6,6 +6,8 @@
 	Version 1.0
 	Version 1.1 : clean the code a little bit
 	Version 1.2 : find a little bug when key 'n' is pressed
+	Version 1.3 : improve light and material, 
+	              improve view port 2 initialize data
 */
 /*---------------------------------------------------------*/
 
@@ -68,8 +70,8 @@ float EyeXInit = 0, 	EyeYInit = 0, 		EyeZInit = 0;
 float EyeW = EyeWInit,	EyeTh = EyeThInit,	EyeL = EyeLInit;				// all unit mm and degree
 float EyeX = EyeXInit,	EyeY = EyeYInit,	EyeZ = EyeZInit;					// all unit mm
 
-float EyeW2Init = 180,	EyeTh2Init = 30,	EyeL2Init = 2.5;			// all unit mm and degree
-float EyeX2Init = 0,	EyeY2Init = 0,		EyeZ2Init = 0;						// all unit mm
+float EyeW2Init = 270,	EyeTh2Init = 80,	EyeL2Init = 2.5;			// all unit mm and degree
+float EyeX2Init = 0.1,	EyeY2Init = 0,		EyeZ2Init = 0;						// all unit mm
 float EyeW2 = EyeW2Init,EyeTh2 = EyeTh2Init,EyeL2 = EyeL2Init;			// all unit mm and degree
 float EyeX2 = EyeX2Init,EyeY2 = EyeY2Init,	EyeZ2 = EyeZ2Init;						// all unit mm
 
@@ -79,7 +81,7 @@ float RotateStep = 0.500f, ScaleStep = 0.05, MoveStep = 0.03;
 	/*----------------- TimeStep -------------------------*/
 #define TIMESTEP
 int FrameTime = 30;	// draw frequency in ms
-int StepTime = 30;		// step frequency in ms
+int StepTime = 10;		// step frequency in ms
 
 	/*----------------- Pause and Vision -------------------------*/
 int PAUSE = 1;
@@ -147,15 +149,6 @@ int main(int argc, char* argv[])
 	glutMotionFunc(MouseMotion);
 	glutPassiveMotionFunc(MousePassiveMotion);
 
-	//EyeL = 2.5;
-	//EyeTh = 30;
-	EyeL2 = 2.5;
-	EyeTh2 = 90;
-	EyeW2 = 270;
-	//EyeW2 += 30;
-	EyeX2 = 1;
-	//EyeY2 = 1;
-
 	//------------------ glut Main Loop -------------------//
 	printf("----------- opengl begins ----------\n");
 	glutMainLoop();     
@@ -175,9 +168,23 @@ void myDisplay(void)
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     
 	glEnable(GL_DEPTH_TEST);
 
-	//-------- Light -----------//
-	float AmbientLight[4]={1,1,1,1};
-	glLightfv(GL_LIGHT0,GL_AMBIENT, AmbientLight);
+	//--- Light and Material ---//
+	const GLfloat light_position[] = { 100.0, -20.0, 100.0, 0.0 };
+	const GLfloat light_ambient [] = { 0.1, 0.1, 0.1, 1.0 };
+	const GLfloat light_diffuse [] = { 0.1, 0.1, 0.1, 1.0 };
+	const GLfloat light_specular[] = { 0.1, 0.1, 0.1, 1.0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT , light_ambient );
+	glLightfv(GL_LIGHT0, GL_DIFFUSE , light_diffuse );
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	const GLfloat BODY_COLOR[]           = { 1.0f, 1.0f, 1.0f, 1.0f };
+	const GLfloat SPECULAR[]             = { 0.1f, 0.1f, 0.1f, 1.0f };
+	const GLfloat SHININESS[]            = { 0.1f                   };
+	const GLfloat EMISSION[]             = { 0.1f, 0.1f, 0.1f, 1.0f };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, SPECULAR);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, SHININESS);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, EMISSION);
+
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 
@@ -267,7 +274,7 @@ void myDisplay(void)
 
 	glBegin(GL_LINES);
 	glVertex3f(-half,0,0.0f);
-	glVertex3f(half,0,0.0f);
+	glVertex3f(half * 2,0,0.0f);
 	
 	glVertex3f(0,-half,0.0f);
 	glVertex3f(0,half,0.0f);
@@ -327,14 +334,6 @@ void myIdle(void)
 void reshape(int w, int h)
 {
 	WindowHeight = h; Windowwidth = w;
-
-	/*
-	glViewport(0,0,(GLsizei)w,(GLsizei)h);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60,(float)w/(float)h,0.1f,10000.f);
-	glMatrixMode(GL_MODELVIEW);
-	*/
 }
 
 //----------------------- Key Board ---------------------- //

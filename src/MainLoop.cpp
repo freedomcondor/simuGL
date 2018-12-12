@@ -47,7 +47,7 @@ int function_init()
 	};
 	d.setPoint(2, points);
 
-	a.setv(0.5, -0.5, 0);
+	//a.setv(0.5, -0.5, 0);
 
 	a.setm(1);
 	b.setm(1000);
@@ -65,9 +65,10 @@ int function_step(double time)	// time in s
 {
 	a.clearF(); b.clearF(); c.clearF();
 	double G = 0.001;
-	a.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (b.l - a.l).nor());
+	//a.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (b.l - a.l).nor());
 	//a.addF( G * a.m * c.m / (a.l - c.l).len() / (a.l - c.l).len() * (c.l - a.l).nor());
-	b.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (a.l - b.l).nor());
+	//b.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (a.l - b.l).nor());
+	a.addF( (a.l - b.l).len() * (b.l - a.l).nor());
 
 	a.run(time);
 	b.run(time);
