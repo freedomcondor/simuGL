@@ -8,6 +8,7 @@
 	Version 1.2 : find a little bug when key 'n' is pressed
 	Version 1.3 : improve light and material, 
 	              improve view port 2 initialize data
+	Version 1.4 : comments about mouse
 */
 /*---------------------------------------------------------*/
 
@@ -94,7 +95,7 @@ int Vision_Control = 1;			// control port 1 or 2
 int MouseNavigation = 0;
 int MouseWindowPosX, MouseWindowPosY;
 
-/*
+/*	TODO:
 int rightmousedown = 0,mousestartx,mousestarty;
 GLfloat locx_mouse;
 GLfloat locy_mouse;
@@ -305,7 +306,7 @@ void myStep(int id)
 	else if (id == 1)
 	{
 		if (PAUSE == 0)
-			function_step(StepTime*1.0/1000);	// StepTime in ms
+			function_step(StepTime*1.0/1000 * 2);	// StepTime in ms
 		else
 		{
 			int i = 0;	// for debug
@@ -527,11 +528,12 @@ void BoardKeysOperate()
 			//WindowY = glutGet(GLUT_WINDOW_Y);
 			//SystemwidthMiddle = WindowX + Windowwidth / 2;	// set window middle
 			//SystemHeightMiddle = WindowY + WindowHeight / 2;
+			//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
+			
 			WindowwidthMiddle = Windowwidth / 2;
 			WindowHeightMiddle = WindowHeight / 2;
-
-			//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
-			glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );
+			glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );	
+				// doesn't work in bash on windows
 			MouseWindowPosX = WindowwidthMiddle;
 			MouseWindowPosY = WindowHeightMiddle;
 
@@ -634,6 +636,7 @@ void MouseOperate()
 
 void Mouse(int button, int state, int x, int y)
 {
+	//happens when a key is hit or release
 	//printf("Mouse %d %d\n",x,y);
 
 	/*			right mouse
@@ -650,7 +653,11 @@ void Mouse(int button, int state, int x, int y)
 
 void MouseMotion(int x, int y)
 {
+	//happens when a key is hold and move
 	//printf("Mouse Motion %d %d\n",x,y);
+	
+	MouseWindowPosX = x;
+	MouseWindowPosY = y;
 
 	/*			right mouse navigation
 	int hori,vert;
@@ -676,6 +683,7 @@ void MouseMotion(int x, int y)
 
 void MousePassiveMotion(int x, int y)
 {
+	//happens when a key is moving without key holding
 	//printf("Mouse Passive Motion %d %d\n",x,y);
 	MouseWindowPosX = x;
 	MouseWindowPosY = y;

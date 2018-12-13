@@ -47,7 +47,8 @@ int function_init()
 	};
 	d.setPoint(2, points);
 
-	//a.setv(0.5, -0.5, 0);
+	a.setv(0.61, -0.61, 0);
+	c.setv(0.0, -0.6 * 1.42, 0);
 
 	a.setm(1);
 	b.setm(1000);
@@ -64,11 +65,28 @@ int function_init()
 int function_step(double time)	// time in s
 {
 	a.clearF(); b.clearF(); c.clearF();
+
+	/*
 	double G = 0.001;
-	//a.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (b.l - a.l).nor());
-	//a.addF( G * a.m * c.m / (a.l - c.l).len() / (a.l - c.l).len() * (c.l - a.l).nor());
-	//b.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (a.l - b.l).nor());
+	a.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (b.l - a.l).nor());
+	a.addF( G * a.m * c.m / (a.l - c.l).len() / (a.l - c.l).len() * (c.l - a.l).nor());
+
+	b.addF( G * a.m * b.m / (a.l - b.l).len() / (a.l - b.l).len() * (a.l - b.l).nor());
+	b.addF( G * c.m * b.m / (b.l - c.l).len() / (b.l - c.l).len() * (c.l - b.l).nor());
+
+	c.addF( G * a.m * c.m / (a.l - c.l).len() / (a.l - c.l).len() * (a.l - c.l).nor());
+	c.addF( G * c.m * b.m / (b.l - c.l).len() / (b.l - c.l).len() * (b.l - c.l).nor());
+
+	a.addF( -a.v*0.04);
+	b.addF( -b.v*0.04);
+	c.addF( -c.v*0.04);
+	*/
+	
 	a.addF( (a.l - b.l).len() * (b.l - a.l).nor());
+	c.addF( (c.l - b.l).len() * (b.l - c.l).nor());
+
+	a.addF( -a.v * 0.04);
+	c.addF( -c.v * 0.04);
 
 	a.run(time);
 	b.run(time);

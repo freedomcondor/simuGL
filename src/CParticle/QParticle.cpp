@@ -7,6 +7,8 @@
 		use vector3 to denote rotation, Quaternion not valid
 	Version 3.0
 		add support of Force and Torque
+	Version 3.0.1
+		changed calculation orders in run
 */
 /*----------------------------------------*/
 
@@ -172,14 +174,14 @@ Vector3 QParticle::getUp() const
 /*--- run -----------------------------*/
 int QParticle::run(double time)
 {
-	a = F / m;
-	aq = T / I;
-
 	l += v * time;
 	v += a * time;
 
 	q *= Quaternion(vq, vq.len() * time);
 	vq += aq * time;
+
+	a = F / m;
+	aq = T / I;
 
 	return 0;
 }

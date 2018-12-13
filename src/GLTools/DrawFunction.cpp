@@ -14,6 +14,7 @@
 	Version 1.6.1 : add a todo mark
 	Version 1.6.2 : use push/pop matrix in drawBox ..
 	Version 1.6.3 : add round covers for Cylinder, 32 slices for Sphere
+	Version 1.6.4 : fix a bug of cylinder draw
 */
 /*---------------------------------------------------------*/
 
@@ -64,6 +65,7 @@ void Cylinder::draw()
 	glPushMatrix();
 	glTranslatef(this->l.x, this->l.y, this->l.z);
 	glRotatef(ang*180/pi,axis.x,axis.y,axis.z);
+	glTranslatef(0, 0, -this->h/2);
 	if ((this->r != 0) && (this->h != 0))
 	{
 		int slices = 32;
