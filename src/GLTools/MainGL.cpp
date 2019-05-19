@@ -306,7 +306,7 @@ void myStep(int id)
 	else if (id == 1)
 	{
 		if (PAUSE == 0)
-			function_step(StepTime*1.0/1000 * 2);	// StepTime in ms
+			function_step(StepTime*1.0/1000);	// StepTime in ms
 		else
 		{
 			int i = 0;	// for debug
@@ -471,42 +471,35 @@ void BoardKeysOperate()
 	}
 
 	//-------------------- navigation -----------------------//
-	//if (key == 'w')
 	if (KeyStates['w'] == 1)		
 	{
 		EyeX -= mstep * cos(EyeW*pi/180);
 		EyeY -= mstep * sin(EyeW*pi/180);
 	}
-	//if (key == 's')
 	if (KeyStates['s'] == 1)		
 	{
 		EyeX += mstep * cos(EyeW*pi/180);
 		EyeY += mstep * sin(EyeW*pi/180);
 	}
-	//if (key == 'a')
 	if (KeyStates['a'] == 1)		
 	{
 		EyeX -= mstep * cos(EyeW*pi/180+pi/2);
 		EyeY -= mstep * sin(EyeW*pi/180+pi/2);
 	}
-	//if (key == 'd')
 	if (KeyStates['d'] == 1)		
 	{
 		EyeX += mstep * cos(EyeW*pi/180+pi/2);
 		EyeY += mstep * sin(EyeW*pi/180+pi/2);
 	}
-	//if (key == ' ')
 	if (KeyStates[' '] == 1)		
 	{
 		EyeZ += mstep;
 	}
 	//if (glutGetModifiers() == GLUT_ACTIVE_CTRL)
-	//if (key == 'c')
 	if (KeyStates['c'] == 1)		
 	{
 		EyeZ -= mstep;
 	}
-	//if (key == 'r')
 	if (KeyStates['r'] == 1)		
 	{
 		EyeW = EyeWInit,	EyeTh = EyeThInit,	EyeL = EyeLInit;
@@ -556,11 +549,10 @@ void BoardKeysOperate()
 		PAUSE = 1 - PAUSE;
 		KeyStates['p'] = 0;
 	}
-	//if (key == 27)			// escape key
-	if (KeyStates[27] == 1)		
+	if (KeyStates[27] == 1)		// escape key
 	{
 		function_exit();
-		exit(0);					// windows or linux or mac
+		exit(0);				// windows or linux or mac
 	}
 
 	//--------------  control channel ---------------//

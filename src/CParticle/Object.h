@@ -2,6 +2,7 @@
 /*	Weixu ZHU (Harry)
 		zhuweixu_harry@126.com
 	Version 1.0
+	Version 1.1  resub in setl and setq
 */
 /*----------------------------------------*/
 
@@ -31,6 +32,11 @@ public:
 	void reLocateSub();
 	int run(double time);
 	virtual void draw();
+
+	Object& setl(const Vector3& _x);
+	Object& setl(double x,double y,double z);
+	Object& setq(const Quaternion& _x);
+	Object& setq(double qx,double qy,double qz,double qw);
 };
 
 struct SubObj

@@ -71,10 +71,15 @@ add_executable(main
 	src/CParticle/Convexhull.cpp
 	src/CParticle/DBox.cpp	
 
+	src/Lua/LuaCtrl.cpp
+
 	src/Robot/Manipulator.cpp	
 
 	src/CWorld/ChessWorld.cpp	
 	src/CellularAutomaton/CellularAutomaton.cpp
+
+	src/Flock/Bird.cpp	
+	src/Flock/BirdCtrl.cpp	
 )
 
 include_directories(
@@ -87,6 +92,8 @@ include_directories(
 	src/Robot
 	src/CWorld
 	src/CellularAutomaton
+	src/Flock
+	src/Lua
 )
 
 target_link_libraries(main 	

@@ -180,8 +180,10 @@ int QParticle::run(double time)
 	q *= Quaternion(vq, vq.len() * time);
 	vq += aq * time;
 
+#ifdef FORCE
 	a = F / m;
 	aq = T / I;
+#endif
 
 	return 0;
 }

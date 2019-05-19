@@ -2,6 +2,7 @@
 /*	Weixu ZHU (Harry)
 		zhuweixu_harry@126.com
 	Version 1.0
+	Version 1.1  resub in setl and setq
 */
 /*----------------------------------------*/
 
@@ -39,6 +40,31 @@ int Object::run(double time)
 	QParticle::run(time);
 	reLocateSub();
 	return 0;
+}
+
+Object& Object::setl(const Vector3& _x)
+{
+	QParticle::setl(_x);
+	reLocateSub();
+	return *this;
+}
+Object& Object::setl(double x,double y,double z)
+{
+	QParticle::setl(x, y, z);
+	reLocateSub();
+	return *this;
+}
+Object& Object::setq(const Quaternion& _x)
+{
+	QParticle::setq(_x);
+	reLocateSub();
+	return *this;
+}
+Object& Object::setq(double qx,double qy,double qz,double qw)
+{
+	QParticle::setq(qx, qy, qz, qw);
+	reLocateSub();
+	return *this;
 }
 
 void Object::draw()
