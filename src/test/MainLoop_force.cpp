@@ -8,6 +8,7 @@
 
 */
 /*---------------------------------------------------------*/
+#define FORCE
 
 #include <stdio.h>
 #include "GLTools.h"
@@ -18,9 +19,8 @@
 #include "Box.h"
 #include "Sphere.h"
 #include "Cylinder.h"
-#include "Convexhull.h"
+//#include "Convexhull.h"
 
-#define FORCE
 
 /*------------ Function Control Channels ------------*/
 double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
@@ -30,7 +30,7 @@ int CMDCH1;
 Sphere a(1,1,0);
 Box b(0,0,0);
 Cylinder c(-1,0,0);
-Convexhull d(0.5, 0.5, 0.5);
+//Convexhull d(0.5, 0.5, 0.5);
 
 /* --------------- MainLoop functions --------------------*/
 int function_exit()
@@ -43,11 +43,15 @@ int function_init()
 	a.setSize(0.1);
 	b.setSize(0.2, 0.2, 0.2);
 	c.setSize(0.1,0.3);
+	/*
 	double points[] = {
 		0.1, 0.2, 0.3,
 		0.2, 0.3, 1.3,
 	};
 	d.setPoint(2, points);
+	for (int i = 0; i < d.n; i++)
+		printf("%s\n",d.points[i].toStr());
+	*/
 
 	a.setv(0.61, -0.61, 0);
 	c.setv(0.0, -0.6 * 1.42, 0);
@@ -56,8 +60,6 @@ int function_init()
 	b.setm(1000);
 	c.setm(1);
 
-	for (int i = 0; i < d.n; i++)
-		printf("%s\n",d.points[i].toStr());
 
 	c.setvq(0,1,0,3.14);
 	b.addF(Vector3(0.1, 0, 0));

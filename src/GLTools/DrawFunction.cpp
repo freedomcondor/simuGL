@@ -27,7 +27,7 @@
 #define ZERO 0.0000001
 
 /* --------------- draw obj --------------------*/
-#include "Box.h"	// or delete line Box.cpp (any cpp with #include "Box.h") in CMakeList.txt
+#include "Box.h"
 void Box::draw()
 {
 	Vector3 axis = this->q.getAxis();
@@ -44,7 +44,7 @@ void Box::draw()
 	glPopMatrix();
 }
 
-#include "Sphere.h"	// or delete line Box.cpp (any cpp with #include "Sphere.h") in CMakeList.txt
+#include "Sphere.h"
 void Sphere::draw()
 {
 	glPushMatrix();
@@ -54,7 +54,7 @@ void Sphere::draw()
 	glPopMatrix();
 }
 
-#include "Cylinder.h"	// or delete line Box.cpp (any cpp with #include "Cylinder.h") in CMakeList.txt
+#include "Cylinder.h"
 void Cylinder::draw()
 {
 	GLUquadricObj *quadratic;
@@ -87,6 +87,7 @@ void Cylinder::draw()
 	glPopMatrix();
 }
 
+/* TODO; move to modules
 #include "CellularAutomaton.h"	// or delete line Box.cpp (any cpp with #include "CellularAutomaton.h") in CMakeList.txt
 int CellularAutomaton::draw(int x, int y, int z, int xl, int yl, int zl)
 {
@@ -101,6 +102,7 @@ int CellularAutomaton::draw(int x, int y, int z, int xl, int yl, int zl)
 
 	return 0;
 }
+*/
 /*------------ Draw Functions -----------------------*/
 double dataLog[MAXDATATRACK][MAXLOG];
 double plotXRange = 0;	// how many data per 1m when draw

@@ -51,49 +51,39 @@ MESSAGE(STATUS "MSG: lua lib: ${LUA_LIBRARIES}")
 #-----------------------------------------------------------#
 #    set compilation                                        #
 #-----------------------------------------------------------#
+set(simu_src_dir ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+#----target-------------------------------------------------#
+set(LuaCtrl ON)
+set(simu_main ${simu_src_dir}/MainLoop.cpp)
+if (CASE)
+	include(${simu_src_dir}/test/${CASE}.cmake)
+endif(CASE)
+#-----------------------------------------------------------#
+
+add_subdirectory(${simu_src_dir}/GLTOOLS)
+add_subdirectory(${simu_src_dir}/CVector)
+add_subdirectory(${simu_src_dir}/CParticle)
+
+
+if (LuaCtrl)
+	add_subdirectory(${simu_src_dir}/Lua)
+endif (LuaCtrl)
+	
+
 set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(main 
-	src/MainLoop.cpp
-
-	src/GLTools/MainGL.cpp
-	src/GLTools/DrawFunction.cpp
-
-	src/CVector/Vector3.cpp
-	src/CVector/Matrix3.cpp
-	src/CVector/Quaternion.cpp
-
-	src/CParticle/QParticle.cpp	
-	src/CParticle/Object.cpp	
-	src/CParticle/Box.cpp	
-	src/CParticle/Sphere.cpp	
-	src/CParticle/Cylinder.cpp
-	src/CParticle/Convexhull.cpp
-	src/CParticle/DBox.cpp	
-
-	src/Lua/LuaCtrl.cpp
-
-	src/Robot/Manipulator.cpp	
-
-	src/CWorld/ChessWorld.cpp	
-	src/CellularAutomaton/CellularAutomaton.cpp
-
-	src/Flock/Bird.cpp	
-	src/Flock/BirdCtrl.cpp	
+	${simu_main}
+	${simu_cpps}
 )
 
-include_directories(
+include_directories( 
+	${simu_include_dirs}
+
 	${OPENGL_INCLUDE_DIRS} 
 	${GLUT_INCLUDE_DIRS}
 	${LUA_INCLUDE_DIR}
-	src/GLTools
-	src/CVector
-	src/CParticle
-	src/Robot
-	src/CWorld
-	src/CellularAutomaton
-	src/Flock
-	src/Lua
 )
 
 target_link_libraries(main 	
