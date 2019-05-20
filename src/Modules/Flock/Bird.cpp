@@ -1,6 +1,6 @@
 #include "Bird.h"
 
-#include <stdlib.h>
+#include <math.h>
 
 #define PI 3.1415926
 Bird::Bird() : Object() {structInit();}
@@ -41,7 +41,9 @@ int Bird::run(double time)
 
 int Bird::setspeed(Vector3& v)
 {
+	v = q.toRotate(v);
 	setv(v);
+	setq(Quaternion(Vector3(1,0,0) * v, acos( v.x/v.len() )));
 	return 0;
 }
 
@@ -56,10 +58,11 @@ int Bird::getNeighbours(int n, Bird allBirds[])
 			neighbours[nNeighbours].loc = q.inv().toRotate(
 				allBirds[i].l - l
 			);
-			neighbours[nNeighbours].dir = allBirds[i].q * q.inv();
+			neighbours[nNeighbours].dir = q.inv() * allBirds[i].q;
 			neighbours[nNeighbours].speed = q.inv().toRotate(
 				allBirds[i].v
 			);
+
 			nNeighbours++;
 		}
 	}

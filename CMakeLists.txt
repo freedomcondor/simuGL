@@ -61,7 +61,7 @@ if (CASE)
 endif(CASE)
 #-----------------------------------------------------------#
 
-add_subdirectory(${simu_src_dir}/GLTOOLS)
+add_subdirectory(${simu_src_dir}/GLTools)
 add_subdirectory(${simu_src_dir}/CVector)
 add_subdirectory(${simu_src_dir}/CParticle)
 

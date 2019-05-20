@@ -151,7 +151,7 @@ int drawCube(double half, double x, double y, double z,
 
 int drawCube(double half, double x, double y, double z, 
 						  double fx,double fy,double fz,
-						  double ux,double uy,double uz, char command[])
+						  double ux,double uy,double uz, char const command[])
 	// f is front, u is up
 {
 	double xaxis,yaxis,zaxis,axis,angleaxis;

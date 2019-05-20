@@ -2,13 +2,13 @@ vim coding.sh -c "
 	tabnew CMakeLists.txt
 
 	tabnew src/GLTools/GLTools.h
-	vsp src/MainLoop.cpp
+	vsp src/test/MainLoop_flock.cpp
 
-	tabnew src/Flock/Bird.h
-	vsp src/Flock/Bird.cpp
+	tabnew src/Modules/Flock/Bird.h
+	vsp src/Modules/Flock/Bird.cpp
 
-	tabnew src/Flock/BirdCtrl.h
-	vsp src/Flock/BirdCtrl.cpp
+	tabnew src/Modules/Flock/BirdCtrl.h
+	vsp src/Modules/Flock/BirdCtrl.cpp
 
 	tabnew src/Lua/LuaCtrl.h
 	vsp src/Lua/LuaCtrl.cpp

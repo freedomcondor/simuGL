@@ -44,10 +44,10 @@ int function_init()
 int function_step(double time)	// time in s
 {
 	for (int i = 0; i < nBirds; i++)
-	{
 		birds[i].getNeighbours(nBirds, birds);
+
+	for (int i = 0; i < nBirds; i++)
 		birds[i].run(time);
-	}
 
 	return 0;
 }

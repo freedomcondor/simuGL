@@ -43,7 +43,7 @@ int drawCube(double half, double x, double y, double z,
 
 int drawCube(double half, double x, double y, double z, 
 						  double fx,double fy,double fz,
-						  double ux,double uy,double uz, char command[]);
+						  double ux,double uy,double uz, char const command[]);
 
 int drawCylinder(	double base, double top, double height,
 				double lx,	double ly, double lz,

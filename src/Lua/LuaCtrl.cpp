@@ -12,7 +12,7 @@ LuaCtrl::~LuaCtrl()
 	lua_close(L);
 }
 
-int LuaCtrl::load(char str[])
+int LuaCtrl::load(char const str[])
 {
 	if ((luaL_loadfile(L, str)) || (lua_pcall(L, 0,0,0)))
 	{
@@ -63,7 +63,7 @@ int LuaCtrl::exit()
 	return 0;
 }
 
-int lua_setTableNumber(lua_State *L, char str[], double x)
+int lua_setTableNumber(lua_State *L, char const str[], double x)
 {
 	lua_pushstring(L, str);
 	lua_pushnumber(L, x);
@@ -71,7 +71,7 @@ int lua_setTableNumber(lua_State *L, char str[], double x)
 	return 0;
 }
 
-double lua_getTableNumber(lua_State *L, char str[])
+double lua_getTableNumber(lua_State *L, char const str[])
 {
 	lua_pushstring(L, str);
 	lua_gettable(L,-2);	
@@ -80,13 +80,35 @@ double lua_getTableNumber(lua_State *L, char str[])
 	return n;
 }
 
-int lua_getTableVector3(lua_State *L, char str[], Vector3& v)
+int lua_getTableVector3(lua_State *L, char const str[], Vector3& v)
 {
 	lua_pushstring(L, str);
 	lua_gettable(L,-2);
 	lua_toVector3(L, v);
 	return 0;
 }
+
+int lua_setTableVector3(lua_State *L, char const str[], Vector3& v)
+{
+	lua_pushstring(L, str);
+	lua_newtable(L);
+	lua_setTableNumber(L, "x", v.x);
+	lua_setTableNumber(L, "y", v.y);
+	lua_setTableNumber(L, "z", v.z);
+	lua_settable(L, -3);
+}
+
+int lua_setTableQuaternion(lua_State *L, char const str[], Quaternion& q)
+{
+	lua_pushstring(L, str);
+	lua_newtable(L);
+	lua_setTableNumber(L, "x", q.l.x);
+	lua_setTableNumber(L, "y", q.l.y);
+	lua_setTableNumber(L, "z", q.l.z);
+	lua_setTableNumber(L, "w", q.w);
+	lua_settable(L, -3);
+}
+
 
 int lua_toVector3(lua_State *L, Vector3& v)
 {
