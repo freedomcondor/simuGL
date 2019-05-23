@@ -22,8 +22,9 @@ double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
 double CH2,CH2_MAX,CH2_MIN,CH2_STEP;
 int CMDCH1;
 
-int nBirds = 2;
-Bird birds[2];
+#define NBIRD 30
+int nBirds = NBIRD;
+Bird birds[NBIRD];
 
 /* --------------- MainLoop functions --------------------*/
 int function_exit()
@@ -33,11 +34,12 @@ int function_exit()
 
 int function_init()
 {
-	birds[0].setl(0,0,0);
-	birds[1].setl(0,0,0.01);
+	for (int i = 0; i < nBirds; i++)
+		birds[i].setl(0,0,0);
 
 	for (int i = 0; i < nBirds; i++)
 		birds[i].ctrl.load(&birds[i], "../src/Modules/Flock/ctrl.lua");
+
 	return 0;
 }
 

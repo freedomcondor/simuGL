@@ -187,7 +187,7 @@ void myDisplay(void)
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, EMISSION);
 
 	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 
 	//------  start to draw ----//
 	glViewport(0,0,(float)Windowwidth,(float)WindowHeight);
