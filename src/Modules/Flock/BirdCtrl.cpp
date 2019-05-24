@@ -70,6 +70,7 @@ int setneighbour(lua_State *L)
 	Bird* bird = (Bird*)lua_touserdata(L,-1);
 
 	lua_getglobal(L, "bird");
+	lua_setTableNumber(L, "sight", bird->sight);
 	lua_pushstring(L, "neighbours");
 		lua_newtable(L);
 			lua_setTableNumber(L, "n", bird->nNeighbours);

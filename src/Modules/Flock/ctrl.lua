@@ -7,18 +7,19 @@ local Quaternion = require("Quaternion")
 
 function init()
 	print("i am init")
-	math.randomseed(1)
+	--math.randomseed(1)
 end
 
 function step(time)
 	local sumspeed = Vec3:create()
-	local speed = Vec3:create(math.random(0,5),
+	local speed = Vec3:create(math.random(0,1),
 	                          math.random(-1,1),
-	                          math.random(-1,1)):nor() * 0.1
+	                          math.random(-1,1)):nor() * 0.010
+
 	for i, nei in ipairs(bird.neighbours) do
 		nei.loc = Vec3:create(nei.loc.x, nei.loc.y, nei.loc.z)
 		nei.speed = Vec3:create(nei.speed.x, nei.speed.y, nei.speed.z) 
-		speed = speed + nei.loc * (nei.loc:len() - 0.01)
+		speed = speed + nei.loc:nor() * (nei.loc:len() - bird.sight / 2) * math.random(0.8, 1.2)
 
 		sumspeed = sumspeed + nei.speed
 	end

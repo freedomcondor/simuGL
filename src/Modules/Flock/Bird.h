@@ -8,11 +8,7 @@
 
 #include "BirdCtrl.h"
 
-#ifdef MAXN
-#define MAXNEIGHBOUR MAXN
-#else
-#define MAXNEIGHBOUR 100
-#endif
+#define MAXNEIGHBOUR 400
 
 struct neighbour
 {
@@ -41,7 +37,7 @@ public:
 	int nNeighbours;
 	int getNeighbours(int n, Bird allBirds[]);
 
-	double sight = 0.02;
+	double sight = 0.30;
 };
 
 #endif

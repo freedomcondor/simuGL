@@ -16,19 +16,19 @@ void Bird::structInit()
 	locBody.l = Vector3(0,0,0);
 	locBody.q = Quaternion(0,1,0,PI/2);
 	locBody.obj = &body;
-	body.setSize(0.005,0.03);
+	body.setSize(0.005,0.015);
 
 	subObj[1] = &locLeft;
-	locLeft.l = Vector3(0,0.010,0);
+	locLeft.l = Vector3(0,0.005,0);
 	locLeft.q = Quaternion(1,1,0,PI/2);
 	locLeft.obj = &left;
-	left.setSize(0.005,0.01);
+	left.setSize(0.002,0.01);
 
 	subObj[2] = &locRight;
-	locRight.l = Vector3(0,-0.010,0);
+	locRight.l = Vector3(0,-0.005,0);
 	locRight.q = Quaternion(-1,1,0,PI/2);
 	locRight.obj = &right;
-	right.setSize(0.005,0.01);
+	right.setSize(0.002,0.01);
 
 	reLocateSub();
 }
