@@ -9,6 +9,7 @@ vim coding.sh -c "
 
 	tabnew src/Modules/Flock/BirdCtrl.h
 	vsp src/Modules/Flock/BirdCtrl.cpp
+	tabnew src/Modules/Flock/ctrl.lua
 
 	tabnew src/Lua/LuaCtrl.h
 	vsp src/Lua/LuaCtrl.cpp

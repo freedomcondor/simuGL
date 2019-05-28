@@ -19,7 +19,7 @@ function step(time)
 	for i, nei in ipairs(bird.neighbours) do
 		nei.loc = Vec3:create(nei.loc.x, nei.loc.y, nei.loc.z)
 		nei.speed = Vec3:create(nei.speed.x, nei.speed.y, nei.speed.z) 
-		speed = speed + nei.loc:nor() * (nei.loc:len() - bird.sight / 2) * math.random(0.8, 1.2)
+		speed = speed + nei.loc:nor() * (nei.loc:len() - bird.sight * 0.7) * math.random(0.7, 1.3)
 
 		sumspeed = sumspeed + nei.speed
 	end
