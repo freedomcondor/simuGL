@@ -4,6 +4,12 @@ set(simu_include_dirs
 	PARENT_SCOPE
 )
 
+set(simu_definitions
+	${simu_definitions}
+	-DFLOCK_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+	PARENT_SCOPE
+)
+
 set(simu_cpps
 	${simu_cpps}
 	${CMAKE_CURRENT_SOURCE_DIR}/Bird.cpp

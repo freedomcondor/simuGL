@@ -34,6 +34,9 @@ int function_exit()
 
 int function_init()
 {
+	printf("src dir %s\n", SRC_DIR);
+	printf("flock dir %s\n", FLOCK_DIR);
+
 	for (int i = 0; i < nBirds/2; i++)
 		birds[i].setl(0,0,0);
 	for (int i = nBirds/2; i < nBirds; i++)

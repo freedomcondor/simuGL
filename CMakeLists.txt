@@ -52,6 +52,7 @@ MESSAGE(STATUS "MSG: lua lib: ${LUA_LIBRARIES}")
 #    set compilation                                        #
 #-----------------------------------------------------------#
 set(simu_src_dir ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(simu_definitions -DSRC_DIR="${simu_src_dir}")
 
 #----target-------------------------------------------------#
 set(LuaCtrl ON)
@@ -72,6 +73,8 @@ endif (LuaCtrl)
 	
 
 set(CMAKE_BUILD_TYPE Debug)
+
+add_definitions(${simu_definitions})
 
 add_executable(main 
 	${simu_main}
