@@ -37,13 +37,11 @@ int function_init()
 	printf("src dir %s\n", SRC_DIR);
 	printf("flock dir %s\n", FLOCK_DIR);
 
-	for (int i = 0; i < nBirds/2; i++)
-		birds[i].setl(0,0,0);
-	for (int i = nBirds/2; i < nBirds; i++)
-	{
-		birds[i].setl(0.3,0.3,0);
-		birds[i].setq(0,0,1,-3.1415/2);
-	}
+	double range = 0.8;
+	for (int i = 0; i < nBirds; i++)
+		birds[i].setl(range*rand()/RAND_MAX-range/2,
+		              range*rand()/RAND_MAX-range/2,
+		              range*rand()/RAND_MAX-range/2);
 
 	for (int i = 0; i < nBirds; i++)
 		birds[i].ctrl.load(&birds[i], "../src/Modules/Flock/ctrl.lua");
@@ -56,7 +54,7 @@ int function_step(double time)	// time in s
 	for (int i = 0; i < nBirds; i++)
 		birds[i].getNeighbours(nBirds, birds);
 
-	for (int i = 1; i < nBirds; i++)
+	for (int i = 0; i < nBirds; i++)
 		birds[i].run(time);
 
 	return 0;

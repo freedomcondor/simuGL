@@ -43,8 +43,8 @@ int Bird::setspeed(Vector3& v)
 {
 	v = q.toRotate(v);
 	setv(v);
-	if (v.len() != 0)
-		setq(Quaternion(Vector3(1,0,0) * v, acos( v.x/v.len() )));
+	//if (v.len() != 0)
+	//	setq(Quaternion(Vector3(1,0,0) * v, acos( v.x/v.len() )));
 	return 0;
 }
 
