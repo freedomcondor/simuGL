@@ -4,6 +4,11 @@ vim coding.sh -c "
 	tabnew src/GLTools/GLTools.h
 	vsp src/test/MainLoop_flock.cpp
 
+	tabnew src/test/MainLoop_solve.cpp
+
+	tabnew src/Math/Solve.h
+	vsp src/Math/Solve.c
+
 	tabnew src/Modules/Flock/Bird.h
 	vsp src/Modules/Flock/Bird.cpp
 
