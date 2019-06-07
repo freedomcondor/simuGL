@@ -31,11 +31,11 @@ int function_init()
 {
 	printf("src dir %s\n", SRC_DIR);
 
-	double x1, x2;
+	double x1, x2, x3;
 	int n;
 
-	Quadratic(1, 0, 0, &n, &x1, &x2);
-	printf("n = %d, x1 = %lf, x2 = %lf\n", n, x1, x2);
+	Cubic(1, -6, 11, -6, &n, &x1, &x2, &x3);
+	printf("n = %d, x1 = %lf, x2 = %lf, x3 = %lf\n", n, x1, x2, x3);
 
 	return 0;
 }
