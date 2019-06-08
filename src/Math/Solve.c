@@ -12,13 +12,13 @@ double cuberoot(double x)
 
 void Linar(double a, double b, int *n, double *x)
 {
-	if ((a == 0) && (b == 0))
+	if ((isZERO_SOLVE(a)) && (isZERO_SOLVE(b)))
 	{
 		*n = -1; 
 		*x = 0;
 		return;
 	}
-	else if ((a == 0) && (b != 0))
+	else if ((isZERO_SOLVE(a)) && (!isZERO_SOLVE(b)))
 	{
 		*n = 0; 
 		*x = 0;
@@ -34,26 +34,26 @@ void Quadratic(double a, double b, double c,
 {
 	double delta = b*b - 4*a*c;
 
-	if (a == 0)
+	if (isZERO_SOLVE(a))
 	{
 		*x2 = 0;
 		Linar(b, c, n, x1);
 		return;
 	}
 
-	if (delta > 0) 
+	if (delta > ZERO_SOLVE) 
 	{
 		*n = 2;
 		*x1 = (-b + sqrt(delta)) / (2 * a);
 		*x2 = (-b - sqrt(delta)) / (2 * a);
 	}
-	else if (delta == 0)
+	else if (isZERO_SOLVE(delta))
 	{
 		*n = 1;
 		*x1 = (-b) / (2 * a);
 		*x2 = 0;
 	}
-	else if (delta == 0)
+	else if (delta < -ZERO_SOLVE)
 	{
 		*n = 0;
 		*x1 = 0;
@@ -64,7 +64,7 @@ void Quadratic(double a, double b, double c,
 void Cubic(double a, double b, double c, double d, 
            int *n, double *x1, double *x2, double *x3)
 {
-	if (a == 0)
+	if (isZERO_SOLVE(a))
 	{
 		*x3 = 0;
 		Quadratic(b, c, d, n, x1, x2);
@@ -77,7 +77,7 @@ void Cubic(double a, double b, double c, double d,
 	double q = 2*b*b*b/(27*a*a*a) - b*c/(3*a*a) + d/a;
 	double delta = q*q/4 + p*p*p/27;
 
-	if (delta >= 0)
+	if (delta > ZERO_SOLVE)
 	{
 		*n = 1;
 		*x1 = 
@@ -86,11 +86,28 @@ void Cubic(double a, double b, double c, double d,
 		*x2 = 0;
 		*x3 = 0;
 	}
+	else if (isZERO_SOLVE(delta))
+	{
+		if (isZERO_SOLVE(q))
+		{
+			*n = 1;
+			*x1 = -b/(3*a);
+			*x2 = 0;
+			*x3 = 0;
+		}
+		else
+		{
+			*n = 2;
+			*x1 = 2 * cuberoot(-q/2) - b/(3*a);
+			*x2 = -cuberoot(-q/2) - b/(3*a);
+			*x3 = 0;
+		}
+	}
 	else
 	{
 		*n = 3;
-		*x1 = -3*q/p - b/(3*a);
-		*x2 = 3*q/(2*p) + 3*sqrt(3)*sqrt(-delta)/p - b/(3*a);
-		*x2 = 3*q/(2*p) - 3*sqrt(3)*sqrt(-delta)/p - b/(3*a);
+		*x1 = 3*q/p - b/(3*a);
+		*x2 = -3*q/(2*p) + 3*sqrt(3)*sqrt(-delta)/p - b/(3*a);
+		*x3 = -3*q/(2*p) - 3*sqrt(3)*sqrt(-delta)/p - b/(3*a);
 	}
 }

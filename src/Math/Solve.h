@@ -5,6 +5,9 @@
 extern "C" {
 #endif
 
+#define ZERO_SOLVE 0.0000001
+#define isZERO_SOLVE(X) (X < ZERO_SOLVE) && (X > -ZERO_SOLVE)
+
 // solve ax + b = 0
 void Linar(double a, double b, int *n, double *x);
 
