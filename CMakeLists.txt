@@ -65,7 +65,7 @@ endif(CASE)
 add_subdirectory(${simu_src_dir}/GLTools)
 add_subdirectory(${simu_src_dir}/CVector)
 add_subdirectory(${simu_src_dir}/CParticle)
-
+add_subdirectory(${simu_src_dir}/Tools)
 
 if (LuaCtrl)
 	add_subdirectory(${simu_src_dir}/Lua)

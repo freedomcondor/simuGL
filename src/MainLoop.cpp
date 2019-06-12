@@ -43,6 +43,7 @@ int function_init()
 	a.setSize(0.1);
 	b.setSize(0.2, 0.2, 0.2);
 	c.setSize(0.1,0.3);
+	b.setq(0, 0, 1, 3.1415926/4);
 	/*
 	double points[] = {
 		0.1, 0.2, 0.3,

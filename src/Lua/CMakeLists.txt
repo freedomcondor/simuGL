@@ -7,5 +7,6 @@ set(simu_include_dirs
 set(simu_cpps
 	${simu_cpps}
 	${CMAKE_CURRENT_SOURCE_DIR}/LuaCtrl.cpp
+	#	${CMAKE_CURRENT_SOURCE_DIR}/Table.cpp
 	PARENT_SCOPE
 )
