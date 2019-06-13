@@ -1,14 +1,17 @@
 vim coding.sh -c "
 	tabnew CMakeLists.txt
 
+	tabnew src/GLTools/DrawFunction.cpp
+	vsp src/GLTools/MainGL.cpp
+
 	tabnew src/GLTools/GLTools.h
-	vsp src/test/MainLoop_flock.cpp
+	vsp src/MainLoop.cpp
 
-	tabnew src/test/MainLoop_solve.cpp
+	tabnew src/test/list_MainLoop.cpp
+	tabnew src/Tools/List.h
+	vsp src/Tools/List.cpp
 
-	tabnew src/Math/Solve.h
-	vsp src/Math/Solve.c
-
+	tabnew src/test/flock_MainLoop.cpp
 	tabnew src/Modules/Flock/Bird.h
 	vsp src/Modules/Flock/Bird.cpp
 
@@ -18,11 +21,12 @@ vim coding.sh -c "
 
 	tabnew src/Lua/LuaCtrl.h
 	vsp src/Lua/LuaCtrl.cpp
-
-	tabnew src/GLTools/DrawFunction.cpp
-	vsp src/GLTools/MainGL.cpp
 "	
 <<COMMENT
+	tabnew src/test/solve_MainLoop.cpp
+	tabnew src/Math/Solve.h
+	vsp src/Math/Solve.c
+
 	tabnew src/CParticle/QParticle.h
 	vsp src/CParticle/QParticle.cpp
 
