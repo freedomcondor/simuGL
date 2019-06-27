@@ -103,6 +103,29 @@ int List<T>::focalAtTail()
 }
 
 template <class T>
+int List<T>::put(double x, double y, double z)
+{
+	Node *p;  
+
+	if (focal == tail)
+		focal = tail->prev;
+
+	p = createNode(x, y, z);
+
+	p->next = focal->next;
+	p->prev = focal;
+
+	focal->next->prev = p;
+	focal->next = p;
+
+	focal = p;
+
+	length++;
+	return 0;
+
+}
+
+template <class T>
 int List<T>::insert(const T& x)
 {
 	Node *p;  
