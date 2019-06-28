@@ -43,7 +43,6 @@ int function_init()
 
 	a.firstFocal();
 	a.put(1,2,3);
-	a.delFocal();
  	for (a.firstFocal(); !a.focalAtTail(); a.nextFocal())
 		printf("%s\n", a.getFocal().toStr());
 	printf("\n");

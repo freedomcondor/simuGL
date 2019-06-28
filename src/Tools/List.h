@@ -30,23 +30,28 @@ private:
 	class Node
 	{
 	public:
-		T data;
+		T *data;
 		Node *next, *prev;
+		int flag;
 
-		Node(){}
-		Node(double x, double y, double z){data(x,y,z);}
+		Node();
+		~Node();
+		int mallocNode();
+		int newNode(double x, double y, double z);
 	}*head, *tail, *focal;
 
 	Node* createNode()
 	{
 		Node *p;
 		p = new Node();
+		p->mallocNode();
 		return p;
 	}
-	Node* createNode(double x, double y, double z)
+	Node* createNodeWithDataConstruct(double x, double y, double z)
 	{
 		Node *p;
-		p = new Node(x,y,z);
+		p = new Node();
+		p->newNode(x,y,z);
 		return p;
 	}
 

@@ -69,3 +69,25 @@ int Bird::getNeighbours(int n, Bird allBirds[])
 	}
 	return 0;
 }
+
+int Bird::getNeighbours(int n, List<Bird>& allBirds)
+{
+	nNeighbours = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (&allBirds[i] == this) continue;
+		if ((allBirds[i].l - l).len() < sight)
+		{
+			neighbours[nNeighbours].loc = q.inv().toRotate(
+				allBirds[i].l - l
+			);
+			neighbours[nNeighbours].dir = q.inv() * allBirds[i].q;
+			neighbours[nNeighbours].speed = q.inv().toRotate(
+				allBirds[i].v
+			);
+
+			nNeighbours++;
+		}
+	}
+	return 0;
+}

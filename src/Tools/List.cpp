@@ -9,6 +9,40 @@
 #include "stdio.h"
 
 template <class T>
+List<T>::Node::Node()
+{
+	data = NULL; next = NULL; prev = NULL;
+	flag = -1;
+}
+
+template <class T>
+List<T>::Node::~Node()
+{
+	if (flag == 0)
+		free(data);
+	else if (flag == 1)
+		delete data;
+}
+
+template <class T>
+int List<T>::Node::mallocNode()
+{
+	data = (T*)malloc(sizeof(T)); 
+	flag = 0;
+	if (data == NULL) return -1;
+	return 0;
+}
+
+template <class T>
+int List<T>::Node::newNode(double x, double y, double z)
+{
+	data = new T(x,y,z); 
+	flag = 1;
+	if (data == NULL) return -1;
+	return 0;
+}
+
+template <class T>
 List<T>::List()
 {
 	head = createNode();
@@ -38,7 +72,7 @@ List<T>::~List()
 template <class T>
 T& List<T>::getFocal()
 {
-	return focal->data;
+	return *(focal->data);
 }
 
 template <class T>
@@ -110,7 +144,7 @@ int List<T>::put(double x, double y, double z)
 	if (focal == tail)
 		focal = tail->prev;
 
-	p = createNode(x, y, z);
+	p = createNodeWithDataConstruct(x, y, z);
 
 	p->next = focal->next;
 	p->prev = focal;
@@ -134,7 +168,7 @@ int List<T>::insert(const T& x)
 		focal = tail->prev;
 
 	p = createNode();
-	p->data = x;
+	*(p->data) = x;
 
 	p->next = focal->next;
 	p->prev = focal;

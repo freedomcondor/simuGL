@@ -16,6 +16,7 @@
 #include "Quaternion.h"
 
 #include "Bird.h"
+#include "List.h"
 
 /*------------ Function Control Channels ------------*/
 double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
@@ -24,7 +25,8 @@ int CMDCH1;
 
 #define NBIRD 50
 int nBirds = NBIRD;
-Bird birds[NBIRD];
+//Bird birds[NBIRD];
+List<Bird> birds;
 
 /* --------------- MainLoop functions --------------------*/
 int function_exit()
@@ -36,6 +38,9 @@ int function_init()
 {
 	printf("src dir %s\n", SRC_DIR);
 	printf("flock dir %s\n", FLOCK_DIR);
+
+	for (int i = 0; i < nBirds; i++)
+		birds.put(0,0,0);
 
 	double range = 0.8;
 	for (int i = 0; i < nBirds; i++)

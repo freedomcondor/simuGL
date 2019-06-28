@@ -5,6 +5,7 @@
 #include "Cylinder.h"
 #include "Vector3.h"
 #include "Quaternion.h"
+#include "List.h"
 
 #include "BirdCtrl.h"
 
@@ -36,6 +37,7 @@ public:
 	struct neighbour neighbours[MAXNEIGHBOUR];
 	int nNeighbours;
 	int getNeighbours(int n, Bird allBirds[]);
+	int getNeighbours(int n, List<Bird>& allBirds);
 
 	double sight = 0.30;
 };
