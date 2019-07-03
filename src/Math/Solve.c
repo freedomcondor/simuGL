@@ -111,3 +111,23 @@ void Cubic(double a, double b, double c, double d,
 		*x3 = -3*q/(2*p) - 3*sqrt(3)*sqrt(-delta)/p - b/(3*a);
 	}
 }
+
+// solve ax4 + bx3 + cx2 + dx + e = 0
+void Quartic(double a, double b, double c, double d, double e,
+             int *n, double *x1, double *x2, double *x3, double *x4)
+{
+	if (isZERO_SOLVE(a))
+	{
+		*x4 = 0;
+		Cubic(b, c, d, e, n, x1, x2, x3);
+		return;
+	}
+
+	// x = y - b/4a
+	// y4 + py2 + qy + r = 0
+	double p = -3*b*b/(8*a*a) + c/a;
+	double q = b*b*b/(8*a*a*a) - b*c/(2*a*a) + d/a;
+	double r = -3*b*b*b*b/(256*a*a*a*a) + b*b*c/(16*a*a*a) - b*d/(4*a*a) + e/a;
+
+	// (y2+p/2)^2 + qy + (r-p2/4) = 0
+}
