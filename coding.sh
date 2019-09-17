@@ -7,6 +7,11 @@ vim coding.sh -c "
 	tabnew src/GLTools/GLTools.h
 	vsp src/MainLoop.cpp
 
+	tabnew src/test/solve_MainLoop.cpp
+	tabnew src/Math/Solve.h
+	vsp src/Math/Solve.c
+"	
+<<COMMENT
 	tabnew src/test/list_MainLoop.cpp
 	tabnew src/Tools/List.h
 	vsp src/Tools/List.cpp
@@ -21,8 +26,7 @@ vim coding.sh -c "
 
 	tabnew src/Lua/LuaCtrl.h
 	vsp src/Lua/LuaCtrl.cpp
-"	
-<<COMMENT
+
 	tabnew src/test/solve_MainLoop.cpp
 	tabnew src/Math/Solve.h
 	vsp src/Math/Solve.c

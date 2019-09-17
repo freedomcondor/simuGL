@@ -73,8 +73,13 @@ void Cubic(double a, double b, double c, double d,
 
 	// x = y - b/3
 	// y3 + py + q = 0
-	double p = -b*b/(3*a*a) + c/a;
-	double q = 2*b*b*b/(27*a*a*a) - b*c/(3*a*a) + d/a;
+	double a2 = a * a;
+	double a3 = a2 * a;
+	double b2 = b * b;
+	double b3 = b2 * b;
+
+	double p = -b2/(3*a2) + c/a;
+	double q = 2*b3/(27*a3) - b*c/(3*a2) + d/a;
 	double delta = q*q/4 + p*p*p/27;
 
 	if (delta > ZERO_SOLVE)
@@ -123,11 +128,20 @@ void Quartic(double a, double b, double c, double d, double e,
 		return;
 	}
 
+	double a2 = a * a;
+	double a3 = a2 * a;
+	double a4 = a3 * a;
+	double b2 = b * b;
+	double b3 = b2 * b;
+	double b4 = b3 * b;
+
 	// x = y - b/4a
 	// y4 + py2 + qy + r = 0
-	double p = -3*b*b/(8*a*a) + c/a;
-	double q = b*b*b/(8*a*a*a) - b*c/(2*a*a) + d/a;
-	double r = -3*b*b*b*b/(256*a*a*a*a) + b*b*c/(16*a*a*a) - b*d/(4*a*a) + e/a;
+	double p = -3*b2/(8*a2) + c/a;
+	double q = b3/(8*a3) - b*c/(2*a2) + d/a;
+	double r = -3*b4/(256*a4) + b2*c/(16*a3) - b*d/(4*a2) + e/a;
+
+
 
 	// (y2+p/2)^2 + qy + (r-p2/4) = 0
 }
