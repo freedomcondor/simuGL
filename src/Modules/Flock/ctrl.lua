@@ -1,4 +1,4 @@
-local srcpath = "../src/"
+local srcpath = "/home/harry/code/simuGL/src/"
 local luapath = srcpath .. "Lua/"
 package.path = package.path .. ";" .. luapath .. "?.lua"
 
