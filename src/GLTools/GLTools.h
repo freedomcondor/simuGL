@@ -17,6 +17,9 @@
 #endif
 
 /*------------ Window Size and location -------------*/
+extern int PAUSE;
+
+/*------------ Window Size and location -------------*/
 extern int WindowHeight, WindowWidth;	// the size of window
 extern int WindowX, WindowY;	// the size of window
 
@@ -27,6 +30,14 @@ extern int CMDCH1;
 extern int CMDCH2;
 
 /*------------ Init Camera Positions    ------------*/
+
+	/*               y|  /eye                       z|  / eye
+	 *                | L                            | L
+	 *                |/ W angle                     |/ th angle
+	 *       ---------+------- x              -------y------- x
+	 *                |
+	 *                |
+	 */
 extern float EyeWInit,  EyeThInit,  EyeLInit;
 extern float EyeXInit,  EyeYInit,   EyeZInit;
 extern float EyeW2Init, EyeTh2Init, EyeL2Init;

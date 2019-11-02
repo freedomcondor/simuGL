@@ -5,6 +5,9 @@ LuaCtrl::LuaCtrl()
 	L = luaL_newstate();
 	luaL_openlibs(L);
 	lua_settop(L, 0);
+
+	lua_pushstring(L, SIMU_LUA_DIR);
+	lua_setglobal(L, "SIMU_LUA_DIR");
 }
 
 LuaCtrl::~LuaCtrl()

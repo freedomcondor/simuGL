@@ -6,7 +6,7 @@ set(simu_include_dirs
 
 set(simu_definitions
 	${simu_definitions}
-	-DFLOCK_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+	-DFLOCK_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}\"
 	PARENT_SCOPE
 )
 

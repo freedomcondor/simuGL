@@ -1,6 +1,4 @@
-local srcpath = "/home/harry/code/simuGL/src/"
-local luapath = srcpath .. "Lua/"
-package.path = package.path .. ";" .. luapath .. "?.lua"
+package.path = package.path .. ";" .. SIMU_LUA_DIR .. "/?.lua"
 
 local Vec3 = require("Vector3")
 local Quaternion = require("Quaternion")

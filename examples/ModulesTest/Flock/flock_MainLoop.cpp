@@ -34,10 +34,12 @@ int simu_exit()
 
 int simu_init(int ScreenWidth, int ScreenHeight)
 {
+	PAUSE = 1;
+
 	char ctrl_dir[300];
-	printf("SIMU dir %s\n", SIMU_DIR);
-	strcpy(ctrl_dir, SIMU_DIR);
-	strcat(ctrl_dir, "/src/Modules/Flock/ctrl.lua");
+	printf("Flock dir %s\n", FLOCK_DIR);
+	strcpy(ctrl_dir, FLOCK_DIR);
+	strcat(ctrl_dir, "/ctrl.lua");
 	printf("flock dir %s\n", FLOCK_DIR);
 
 	for (int i = 0; i < nBirds; i++)

@@ -85,8 +85,7 @@ int FrameTime = 30;	// draw frequency in ms
 int StepTime = 10;		// step frequency in ms
 
 	/*----------------- Pause and Vision -------------------------*/
-int PAUSE = 1;
-//int PAUSE = 0;
+int PAUSE = 0;
 
 int Vision_type = 0;			// 1 first sight, 0 third sight
 int Vision_Control = 1;			// control port 1 or 2

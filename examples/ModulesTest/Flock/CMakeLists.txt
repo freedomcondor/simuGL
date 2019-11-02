@@ -13,7 +13,6 @@ add_subdirectory(../../../src/Modules/Flock
 
 add_definitions(
 	${simu_definitions}
-	-DSIMU_DIR="/home/harry/code/simuGL"
 )
 
 add_executable(main 
