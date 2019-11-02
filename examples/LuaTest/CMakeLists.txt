@@ -8,6 +8,10 @@ add_subdirectory(../../src/Lua
                  ${CMAKE_CURRENT_BINARY_DIR}/simuGL/Lua
 )
 
+add_definitions(
+	${simu_definitions}
+)
+
 add_executable(main 
 	${simu_cpps}
 	main.cpp

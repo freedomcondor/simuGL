@@ -12,6 +12,10 @@ add_subdirectory(../../src/Math
                  ${CMAKE_CURRENT_BINARY_DIR}/simuGL/Math
 )
 
+add_definitions(
+	${simu_definitions}
+)
+
 add_executable(main 
 	${simu_cpps}
 	main.cpp

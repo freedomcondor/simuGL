@@ -4,6 +4,10 @@ add_subdirectory(../../src/GLTools
                  ${CMAKE_CURRENT_BINARY_DIR}/simuGL
 )
 
+add_definitions(
+	${simu_definitions}
+)
+
 add_executable(main 
 	${simu_cpps}
 	MainLoop.cpp
