@@ -10,8 +10,7 @@
 
 */
 /*---------------------------------------------------------*/
-
-#ifdef mac
+#ifdef SIMU_ON_MAC
 #include<GLUT/glut.h>
 #else
 #include<GL/glut.h>

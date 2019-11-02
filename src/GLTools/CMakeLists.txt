@@ -8,7 +8,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
 #set(simu_definitions
 #		${simu_definitions}
-#		-Dwindows
+#		-DSIMU_ON_WINDOWS
 #		PARENT_SCOPE
 #	)
 	SET(CMAKE_EXE_LINKER_FLAGS "/SAFESEH:NO")
@@ -18,7 +18,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin(mac?)")
 	set(simu_definitions
 		${simu_definitions}
-		-Dmac
+		-DSIMU_ON_MAC
 		PARENT_SCOPE
 	)
 ELSE ()
