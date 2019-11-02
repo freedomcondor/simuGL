@@ -32,7 +32,7 @@ int simu_exit()
 	return 0;
 }
 
-int simu_init()
+int simu_init(int ScreenWidth, int ScreenHeight)
 {
 	char ctrl_dir[300];
 	printf("SIMU dir %s\n", SIMU_DIR);

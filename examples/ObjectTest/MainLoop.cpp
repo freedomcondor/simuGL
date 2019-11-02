@@ -32,9 +32,10 @@ int simu_exit()
 	return 0;
 }
 
-int simu_init()
+int simu_init(int ScreenWidth, int ScreenHeight)
 {
 	EyeWInit = 45;
+	WindowX = ScreenWidth / 4;
 
 	a.setSize(0.1);
 	b.setSize(0.2, 0.2, 0.2);

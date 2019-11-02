@@ -16,6 +16,10 @@
 #include<GL/glut.h>
 #endif
 
+/*------------ Window Size and location -------------*/
+extern int WindowHeight, WindowWidth;	// the size of window
+extern int WindowX, WindowY;	// the size of window
+
 /*------------ Function Control Channels ------------*/
 extern double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
 extern double CH2,CH2_MAX,CH2_MIN,CH2_STEP;
@@ -55,7 +59,7 @@ int drawCylinder(	double base, double top, double height,
 			);
 
 /*------------- MainLoop Functions -------------------*/
-int simu_init();
+int simu_init(int ScreenWidth, int ScreenHeight);
 int simu_draw();
 int simu_draw2();
 int simu_step(double time);

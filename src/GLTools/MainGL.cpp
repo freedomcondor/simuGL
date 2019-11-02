@@ -53,11 +53,11 @@ void MouseOperate();
 int KeyStates[256];				// key board states
 int KeySpecialStates[256];
 int CountIdle = 0;				// idle count for step control 
-int Systemwidth, SystemHeight;	// the size of screen
-int SystemwidthMiddle, SystemHeightMiddle;
-int WindowHeight, Windowwidth;	// the size of window
-int WindowHeightMiddle, WindowwidthMiddle;	// the size of window
+int ScreenWidth, ScreenHeight;	// the size of screen
+int ScreenWidthMiddle, ScreenHeightMiddle;
 int WindowX, WindowY;	// the size of window
+int WindowHeight, WindowWidth;	// the size of window
+int WindowHeightMiddle, WindowWidthMiddle;	// the size of window
 
 	/*----------------- Controls ----------------------------*/
 double CH1,CH1_MAX,CH1_MIN,CH1_STEP;
@@ -116,17 +116,22 @@ int main(int argc, char* argv[])
 	printf("----------- openGL -----------------\n");
 	glutInit(&argc, argv);      
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);     
-	Systemwidth = glutGet(GLUT_SCREEN_WIDTH);		// get screen size
-	SystemHeight = glutGet(GLUT_SCREEN_HEIGHT);
-	printf("System Screen size : %d %d\n",Systemwidth,SystemHeight);
-	WindowHeight = SystemHeight / 2; 
-	Windowwidth = Systemwidth / 2;
-	SystemwidthMiddle = Windowwidth / 2;
-	SystemHeightMiddle = WindowHeight / 2;
+	ScreenWidth = glutGet(GLUT_SCREEN_WIDTH);		// get screen size
+	ScreenHeight = glutGet(GLUT_SCREEN_HEIGHT);
 
+	printf("System Screen size : %d %d\n",ScreenWidth,ScreenHeight);
 	WindowX = 0, WindowY = 0;	// the position of window
+	WindowHeight = ScreenHeight / 2; //size of window
+	WindowWidth = ScreenWidth / 2;
+	//ScreenWidthMiddle = WindowWidth / 2; // not used now
+	//ScreenHeightMiddle = WindowHeight / 2;
+
+	//------------------ function init --------------------//
+	if (simu_init(ScreenWidth, ScreenHeight) != 0) // may overwrite Window position and size
+		return -1;
+
 	glutInitWindowPosition(WindowX, WindowY);     
-	glutInitWindowSize(Windowwidth, WindowHeight);      
+	glutInitWindowSize(WindowWidth, WindowHeight);      
 	glutCreateWindow("Simulator");     
 
 	glutDisplayFunc(myDisplay);     
@@ -146,10 +151,6 @@ int main(int argc, char* argv[])
 	glutMouseFunc(Mouse);
 	glutMotionFunc(MouseMotion);
 	glutPassiveMotionFunc(MousePassiveMotion);
-
-	//------------------ function init --------------------//
-	if (simu_init() != 0)
-		return -1;
 
 	//------------------ function set init --------------------//
 	EyeW = EyeWInit;   EyeTh = EyeThInit;   EyeL = EyeLInit;
@@ -197,10 +198,10 @@ void myDisplay(void)
 	//glEnable(GL_LIGHTING);
 
 	//------  start to draw ----//
-	glViewport(0,0,(float)Windowwidth,(float)WindowHeight);
+	glViewport(0,0,(float)WindowWidth,(float)WindowHeight);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60,(float)Windowwidth/(float)WindowHeight,0.1f,10000.f);
+	gluPerspective(60,(float)WindowWidth/(float)WindowHeight,0.1f,10000.f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();     
 
@@ -259,10 +260,10 @@ void myDisplay(void)
 	
 	//------------------------------- view port 2  -----------------------------------//
 	//------  start to draw ----//
-	glViewport(0,0,Windowwidth/4,WindowHeight/4);
+	glViewport(0,0,WindowWidth/4,WindowHeight/4);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60,(float)Windowwidth/(float)WindowHeight,0.1f,10000.f);
+	gluPerspective(60,(float)WindowWidth/(float)WindowHeight,0.1f,10000.f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();     
 
@@ -341,7 +342,7 @@ void myIdle(void)
 
 void reshape(int w, int h)
 {
-	WindowHeight = h; Windowwidth = w;
+	WindowHeight = h; WindowWidth = w;
 }
 
 //----------------------- Key Board ---------------------- //
@@ -526,15 +527,15 @@ void BoardKeysOperate()
 		{
 			//WindowX = glutGet(GLUT_WINDOW_X);		// get window pos
 			//WindowY = glutGet(GLUT_WINDOW_Y);
-			//SystemwidthMiddle = WindowX + Windowwidth / 2;	// set window middle
-			//SystemHeightMiddle = WindowY + WindowHeight / 2;
-			//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
+			//SystemwidthMiddle = WindowX + WindowWidth / 2;	// set window middle
+			//ScreenHeightMiddle = WindowY + WindowHeight / 2;
+			//SetCursorPos(SystemwidthMiddle, ScreenHeightMiddle); // windows only
 			
-			WindowwidthMiddle = Windowwidth / 2;
+			WindowWidthMiddle = WindowWidth / 2;
 			WindowHeightMiddle = WindowHeight / 2;
-			glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );	
+			glutWarpPointer(WindowWidthMiddle , WindowHeightMiddle );	
 				// doesn't work in bash on windows
-			MouseWindowPosX = WindowwidthMiddle;
+			MouseWindowPosX = WindowWidthMiddle;
 			MouseWindowPosY = WindowHeightMiddle;
 
 			glutSetCursor(GLUT_CURSOR_NONE);
@@ -610,7 +611,7 @@ void MouseOperate()
 
 		//printf("%d %d\n",p.x,p.y);
 
-		x -= WindowwidthMiddle;
+		x -= WindowWidthMiddle;
 		y -= WindowHeightMiddle;
 
 		if (Vision_type == 0)
@@ -628,8 +629,8 @@ void MouseOperate()
 			if (EyeTh < -89.9) EyeTh = -89.9;
 		}	
 
-		//SetCursorPos(SystemwidthMiddle, SystemHeightMiddle); // windows only
-		glutWarpPointer(WindowwidthMiddle , WindowHeightMiddle );
+		//SetCursorPos(SystemwidthMiddle, ScreenHeightMiddle); // windows only
+		glutWarpPointer(WindowWidthMiddle , WindowHeightMiddle );
 	}
 }
 
