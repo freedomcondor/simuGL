@@ -23,6 +23,11 @@ if (simu_Tools)
 endif (simu_Tools)
 
 #------ set variables ---------------------------------#
+set(simu_definitions
+	${simu_definitions}
+	PARENT_SCOPE
+)
+
 set(simu_include_dirs 
 	${simu_include_dirs}
 	PARENT_SCOPE
