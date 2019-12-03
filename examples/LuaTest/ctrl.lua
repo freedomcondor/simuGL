@@ -1,14 +1,24 @@
 package.path = package.path .. ";" .. SIMU_LUA_DIR .. "/?.lua"
 
-Vector3 = require("Vector3")
+Vec3 = require("Vector3")
+Qua = require("Quaternion")
 
 function init()
 	print("I am init")
+	local q1 = Qua:createFrom4Vector3s(Vec3(1,0,0), 
+	                                   Vec3(0,1,0),
+	                                   Vec3(1,1,0),
+	                                   Vec3(-1,1,1)
+	                                  )
+	print(q1:getAxis())
+	print(q1:getAng())
+	print(q1:toRotate(Vec3(0,0,1)))
 end
 
 function step()
-	print(simu_lua_src)
-	print(Vector3:create(0,0,0))
+	print(SIMU_LUA_DIR)
+	print(Vec3(0,0,0))
+	print(Qua(0,0,1,math.pi):toRotate(Vec3(0,0,0)))
 	print("I am step")
 end
 

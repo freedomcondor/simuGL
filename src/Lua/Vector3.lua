@@ -1,8 +1,17 @@
 --------------------------------------------
 --	Version 1.1 : nor() length zero check
+--	Version 2.1 : Vector3(0,0,0) to create
+--                remove CLASS = "Vector3", use CLASSVECTOR3 = true instead
 --------------------------------------------
-local Vector3 = {CLASS = "Vector3"}
+local Vector3 = {CLASSVECTOR3 = true}
 Vector3.__index = Vector3
+
+-- call with Vector3(0,0,0)
+local Vector3mt = {}
+setmetatable(Vector3, Vector3mt)
+function Vector3mt:__call(x, y, z)
+	return Vector3:create(x,y,z)
+end
 
 function Vector3:create(x,y,z)
 	local instance = {}
@@ -12,7 +21,7 @@ function Vector3:create(x,y,z)
 	      --so you can :  a = State:create();  b = a:create();  grandfather-father-son
 
 	-- Asserts and add data
-	if type(x) == "table" and x.CLASS == "Vector3" then
+	if type(x) == "table" and x.CLASSVECTOR3 == true then
 		instance.x = x.x
 		instance.y = x.y
 		instance.z = x.z
@@ -52,8 +61,8 @@ end
 
 -- c = a + b
 function Vector3.__add(a,b)
-	if 	type(a) == "table" and a.CLASS == "Vector3" and
-		type(b) == "table" and b.CLASS == "Vector3" then
+	if 	type(a) == "table" and a.CLASSVECTOR3 == true and
+		type(b) == "table" and b.CLASSVECTOR3 == true then
 		local c = Vector3:create()
 		c.x = a.x + b.x
 		c.y = a.y + b.y
@@ -77,8 +86,8 @@ end
 -- the result of * is a Vector, cross multi of Vectors, or number multi like 5 * a
 	-- for productive multi, see __pow
 function Vector3.__mul(a,b)
-	if 	type(a) == "table" and a.CLASS == "Vector3" and
-		type(b) == "table" and b.CLASS == "Vector3" then
+	if 	type(a) == "table" and a.CLASSVECTOR3 == true and
+		type(b) == "table" and b.CLASSVECTOR3 == true then
 		local c = Vector3:create(	a.y * b.z - a.z * b.y,
 									a.z * b.x - a.x * b.z,
 									a.x * b.y - a.y * b.x
@@ -114,7 +123,7 @@ function Vector3.__pow(a,b)
 			return nil
 		end
 	end
-	if type(b) == "table" and b.CLASS == "Vector3" then
+	if type(b) == "table" and b.CLASSVECTOR3 == true then
 		return a.x * b.x + a.y * b.y + a.z * b.z
 	end
 	return Vector3:create()
@@ -156,7 +165,7 @@ end
 -- need to require Quaternion to use this:
 	-- should create a new Vector, don't change the self
 function Vector3:rotatedby(q)
-	if type(q) == "table" and q.CLASS == "Quaternion" then
+	if type(q) == "table" and q.CLASSQUATERNION == true then
 		--self = Vec3:create(q:toRotate(self))
 		return q:toRotate(self)
 	else

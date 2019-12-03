@@ -6,18 +6,28 @@
 --   version 2   : create default from rotation, use createHardValue for hard set
 --   version 3   : create getAxis, getAng
 --   version 3.1 : create() creates a rotate((0,0,1),0) which is hardvalue(0,0,0,1) not a hardvalue(0,0,0,0)
+--   version 4.1 : Quaternion(0,0,1,0) to create, 
+--                 remove CLASS = "Quaternion", use CLASSQUATERNION = true instead
+--   version 4.2 : add a createFrom4Vector3s function
 --]]
 local Vec3 = require("Vector3")
 
-local Quaternion = {CLASS = "Quaternion", CLASSQUATERNION = true}
+local Quaternion = {CLASSQUATERNION = true}
 Quaternion.__index = Quaternion
+
+-- call will Quaternion(0,0,1,0)
+local Quaternionmt = {}
+setmetatable(Quaternion, Quaternionmt)
+function Quaternionmt:__call(x,y,z,th)
+	return Quaternion:create(x,y,z,th)
+end
 
 function Quaternion:createFromHardValue(x,y,z,w)
 	local instance = {}
 	setmetatable(instance,self)
 	self.__index = self
 
-	if type(x) == "table" and x.CLASS == "Vector3" then
+	if type(x) == "table" and x.CLASSVECTOR3 == true then
 		instance.v = x
 		instance.w = y
 		return instance
@@ -36,37 +46,47 @@ function Quaternion:createFromHardValue(x,y,z,w)
 	return instance;
 end
 
---[[  abandon this function
-function Quaternion:createFrom4Vecs(_abc_o,_pqr_o,_abc,_pqr)
-	-- give 4 vectors, rotation from the from the first two to last two
-	-- some problem for specific situation
-	-- 		only general case and
-	-- 		only work for right angle and pqr_o = pqr
-	local abc = _abc:nor()
-	local pqr = _pqr:nor()
-	local abc_o = _abc_o:nor()
-	local pqr_o = _pqr_o:nor()
+function Quaternion:createFrom4Vector3s(X1_, Y1_, X2_, Y2_)
+	local X1, Y1, X2, Y2
+	if type(X1_) == "table" and X1_.CLASSVECTOR3 == true and X1_:len() ~= 0 and
+	   type(Y1_) == "table" and Y1_.CLASSVECTOR3 == true and Y1_:len() ~= 0 and
+	   type(X2_) == "table" and X2_.CLASSVECTOR3 == true and X2_:len() ~= 0 and
+	   type(Y2_) == "table" and Y2_.CLASSVECTOR3 == true and Y2_:len() ~= 0 then
+		X1 = X1_:nor()
+		Y1 = Y1_:nor()
+		X2 = X2_:nor()
+		Y2 = Y2_:nor()
+	else
+		print("invalid parameter for Quaternion: create from 4 vector3s")
+		return Quaternion(0,0,1,0)
+	end
 
-	local axis = (abc-abc_o) * (pqr - pqr_o)
-	axis = axis:nor()
+	local th1 = math.acos(X1 ^ X2)
+	local axis1 = X1 * X2
+	local qua1
+	if axis1:len() == 0 then
+		if th1 < math.pi/2 then
+			qua1 = Quaternion(0,0,1,0)
+		else
+			qua1 = Quaternion(0,0,1,math.pi)
+		end
+	else
+		qua1 = Quaternion(axis1, th1)
+	end
 
-	local rot_o = abc_o - axis ^ abc * axis
-	local rot_d = abc - axis ^ abc * axis
-	rot_o = rot_o:nor()
-	rot_d = rot_d:nor()
-	local cos = rot_o ^ rot_d
-	axis = rot_o * rot_d
-	local th = math.acos(cos)
+	local Y_rotated = qua1:toRotate(Y1)
+	local th2 = math.acos(Y_rotated ^ Y2)
+	local axis2 = (Y_rotated * Y2):nor()
+	if (axis2 - X2):len() > 1 then X1 = -X1 end
+	local qua2 = Quaternion(X1, th2)
 
-	local quater = self:create(axis,th)
-	return quater
+	return qua1 * qua2
 end
---]]
 
 function Quaternion:create(x,y,z,th)	-- create from rotation
 	local halfth
 	local v
-	if type(x) == "table" and x.CLASS == "Vector3" and x:len() ~= 0 then
+	if type(x) == "table" and x.CLASSVECTOR3 == true and x:len() ~= 0 then
 		halfth = y / 2
 		v = x / x:len()
 		v = x:nor()
@@ -144,7 +164,7 @@ function Quaternion:toRotate(a)
 	if self.v:len() == 0 and self.w == 0 then
 		return a
 	end
-	if type(a) == "table" and a.CLASS == "Vector3" then
+	if type(a) == "table" and a.CLASSVECTOR3 == true then
 		---[[
 		local p = Quaternion:createFromHardValue(a,0)
 		local res = self * p
