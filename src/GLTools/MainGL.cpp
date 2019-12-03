@@ -151,31 +151,6 @@ int main(int argc, char* argv[])
 	glutMotionFunc(MouseMotion);
 	glutPassiveMotionFunc(MousePassiveMotion);
 
-	//------------------ function set init --------------------//
-	EyeW = EyeWInit;   EyeTh = EyeThInit;   EyeL = EyeLInit;
-	EyeX = EyeXInit;   EyeY = EyeYInit;     EyeZ = EyeZInit;
-	EyeW2 = EyeW2Init; EyeTh2 = EyeTh2Init; EyeL2 = EyeL2Init;
-	EyeX2 = EyeX2Init; EyeY2 = EyeY2Init;   EyeZ2 = EyeZ2Init;
-
-	//------------------ glut Main Loop -------------------//
-	printf("----------- opengl begins ----------\n");
-	glutMainLoop();     
-	return 0;
-}
-
-//------------------------ OpenGL Functions -------------------------//
-void myDisplay(void)
-{
-	GLfloat half;
-	
-	//------------------------------- view port 1  -----------------------------------//
-	//-------- Backgroud -------//
-	//glClearColor(0.0f,0.0f,0.0f,1.0f);     	//black
-	glClearColor(1.0f,1.0f,1.0f,1.0f);     		//white
-	//-------- Depth -----------//
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     
-	glEnable(GL_DEPTH_TEST);
-
 	//--- Light and Material ---//
 	const GLfloat light_position[] = { 100.0, -20.0, 100.0, 0.0 };
 	const GLfloat light_ambient [] = { 0.1, 0.1, 0.1, 1.0 };
@@ -194,7 +169,35 @@ void myDisplay(void)
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, EMISSION);
 
 	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
+
+	//-------- Depth -----------//
+	glEnable(GL_DEPTH_TEST);
+
+	//------------------ function set init --------------------//
+	EyeW = EyeWInit;   EyeTh = EyeThInit;   EyeL = EyeLInit;
+	EyeX = EyeXInit;   EyeY = EyeYInit;     EyeZ = EyeZInit;
+	EyeW2 = EyeW2Init; EyeTh2 = EyeTh2Init; EyeL2 = EyeL2Init;
+	EyeX2 = EyeX2Init; EyeY2 = EyeY2Init;   EyeZ2 = EyeZ2Init;
+
+	//------------------ glut Main Loop -------------------//
+	printf("----------- opengl begins ----------\n");
+	glutMainLoop();     
+	return 0;
+}
+
+//------------------------ OpenGL Functions -------------------------//
+void myDisplay(void)
+{
+	//-------- Depth -----------//
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);     
+
+	GLfloat half;
+	//------------------------------- view port 1  -----------------------------------//
+	//-------- Backgroud -------//
+	//glClearColor(0.0f,0.0f,0.0f,1.0f);     	//black
+	glClearColor(1.0f,1.0f,1.0f,1.0f);     		//white
+
 
 	//------  start to draw ----//
 	glViewport(0,0,(float)WindowWidth,(float)WindowHeight);
