@@ -13,5 +13,6 @@ set(simu_cpps
 	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
 	#${CMAKE_CURRENT_SOURCE_DIR}/Convexhull.cpp
 	#${CMAKE_CURRENT_SOURCE_DIR}/DBox.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/DynamicsEngine.cpp
 	PARENT_SCOPE
 )

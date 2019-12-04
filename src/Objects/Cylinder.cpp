@@ -7,28 +7,19 @@
 
 #include "Cylinder.h"
 
-Cylinder::Cylinder():Object()
+void Cylinder::init()
 {
 	setSize(1,1);
+	type = CylinderType;
 }
 
-Cylinder::Cylinder(double x,double y,double z)
-	:Object(x,y,z)
-{
-	setSize(1,1);
-}
+Cylinder::Cylinder():Object() { init(); }
 
-Cylinder::Cylinder(const Vector3& _x)
-	:Object(_x)
-{
-	setSize(1,1);
-}
+Cylinder::Cylinder(double x,double y,double z):Object(x,y,z) { init(); }
 
-Cylinder::Cylinder(const Vector3& _x, const Quaternion& _y)
-	:Object(_x,_y)
-{
-	setSize(1,1);
-}
+Cylinder::Cylinder(const Vector3& _x):Object(_x) { init(); }
+
+Cylinder::Cylinder(const Vector3& _x, const Quaternion& _y):Object(_x,_y) { init(); }
 
 int Cylinder::setSize(double _r,double _h)
 {

@@ -15,6 +15,7 @@
 
 #define MAXSUBN 20
 
+
 struct SubObj;
 
 class Object : public QParticle
@@ -23,6 +24,7 @@ public:
 	int subN;
 	struct SubObj *subObj[MAXSUBN];
 
+	void init();
 	Object();
 	Object(double x,double y,double z);
 	Object(const Vector3& _x);
@@ -32,6 +34,8 @@ public:
 	void reLocateSub();
 	int run(double time);
 	virtual void draw();
+
+	enum ObjectType{MultiBodyType, BoxType, SphereType, CylinderType} type;
 
 	Object& setl(const Vector3& _x);
 	Object& setl(double x,double y,double z);

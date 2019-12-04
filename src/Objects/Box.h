@@ -16,6 +16,7 @@ class Box : public Object
 public:
 	double x,y,z;
 
+	void init();
 	Box();
 	Box(double x,double y,double z);
 	Box(const Vector3& _x);

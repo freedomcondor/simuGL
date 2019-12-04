@@ -8,11 +8,16 @@
 
 #include "Object.h"
 
-Object::Object() : QParticle() {subN = 0;}
-Object::Object(double x,double y,double z) : QParticle(x,y,z) {subN = 0;}
-Object::Object(const Vector3& _x) : QParticle(_x) {subN = 0;}
-Object::Object(const Vector3& _x, const Quaternion& _y) : QParticle(_x,_y) {subN = 0;}
+void Object::init()
+{
+	subN = 0; 
+	type = MultiBodyType;
+}
 
+Object::Object() : QParticle() { init(); }
+Object::Object(double x,double y,double z) : QParticle(x,y,z) { init(); }
+Object::Object(const Vector3& _x) : QParticle(_x) { init(); }
+Object::Object(const Vector3& _x, const Quaternion& _y) : QParticle(_x,_y) { init(); }
 Object::~Object()
 {
 	// try not to use dynamic memory

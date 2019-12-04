@@ -14,6 +14,7 @@ class Sphere : public Object
 public:
 	double r;
 
+	void init();
 	Sphere();
 	Sphere(double x,double y,double z);
 	Sphere(const Vector3& _x);

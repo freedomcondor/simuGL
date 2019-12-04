@@ -15,6 +15,7 @@ class Cylinder : public Object
 public:
 	double r,h;
 
+	void init();
 	Cylinder();
 	Cylinder(double x,double y,double z);
 	Cylinder(const Vector3& _x);
