@@ -6,7 +6,9 @@ int main()
 {
 	LuaCtrl a;
 
-	a.load("../ctrl.lua");
+	//a.load("../ctrl.lua");
+	//a.load("../dijk.lua");
+	a.load("../mincostflow.lua");
 	a.init();
 	for (int i = 0; i < 5; i++)
 		a.step(0.2);
