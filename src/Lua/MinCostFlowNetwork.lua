@@ -4,7 +4,7 @@ DMSG = require("DebugMessage")
 DMSG.enable()
 
 function MinCostFlowNetwork(c, w)
-	local INF = 1/0
+	local INF = math.huge
 	-- w is the weight
 	-- c is the capacity  c[i][j] = nil means no connect
 	-- assume the flow is one-directional 

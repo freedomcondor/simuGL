@@ -3,7 +3,7 @@ function Dijkstra(w)
 	-- if w[i][j] is a table, means multiple connects between i and j
 	-- find shortest path from 1 to i
 
-	local INF = 1 / 0
+	local INF = math.huge
 
 	-- how many nodes
 	local n = #w
