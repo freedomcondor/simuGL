@@ -3,28 +3,29 @@ MESSAGE(STATUS "operation system is ${CMAKE_SYSTEM}")
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	MESSAGE(STATUS "current platform: Linux ")
-	#add_definitions(-Dlinux)
+	SET(platform_flag -DSIMU_ON_LINUX)
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
-#set(simu_definitions
-#		${simu_definitions}
-#		-DSIMU_ON_WINDOWS
-#		PARENT_SCOPE
-#	)
+	SET(platform_flag -DSIMU_ON_WINDOWS)
 	SET(CMAKE_EXE_LINKER_FLAGS "/SAFESEH:NO")
-ELSEIF (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
-	MESSAGE(STATUS "current platform: FreeBSD")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin(mac?)")
-	set(simu_definitions
-		${simu_definitions}
-		-DSIMU_ON_MAC
+	SET(PlatformFlag -DSIMU_ON_APPLE)
+	SET(simu_include_dirs 
+		${simu_include_dirs}
+		-DGL_SILENCE_DEPRECATION
 		PARENT_SCOPE
 	)
 ELSE ()
 	MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+	SET(platform_flag -DSIMU_ON_UNKNOWNPLATFORM)
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
+set(simu_definitions
+	${simu_definitions}
+	${platform_flag}
+	PARENT_SCOPE
+)
 
 #--- add OpenGL --------------------------------------------#
 
@@ -40,7 +41,6 @@ MESSAGE(STATUS "MSG: glut inc: ${GLUT_INCLUDE_DIRS}")
 MESSAGE(STATUS "MSG: glut lib: ${GLUT_LIBRARY}")  
 
 #--- set variables -----------------------------------------#
-
 set(simu_include_dirs 
 	${simu_include_dirs}
 	${CMAKE_CURRENT_SOURCE_DIR}
