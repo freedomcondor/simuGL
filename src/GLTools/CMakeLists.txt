@@ -10,9 +10,9 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	SET(CMAKE_EXE_LINKER_FLAGS "/SAFESEH:NO")
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	MESSAGE(STATUS "current platform: Darwin(mac?)")
-	SET(PlatformFlag -DSIMU_ON_APPLE)
-	SET(simu_include_dirs 
-		${simu_include_dirs}
+	SET(platform_flag -DSIMU_ON_APPLE)
+	SET(platform_flag
+		${platform_flag}
 		-DGL_SILENCE_DEPRECATION
 		PARENT_SCOPE
 	)
