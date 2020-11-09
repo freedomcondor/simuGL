@@ -21,7 +21,7 @@
 #include "string.h"
 
 /*------------ Function Control Channels ------------*/
-#define NBIRD 50
+#define NBIRD 100
 int nBirds = NBIRD;
 //Bird birds[NBIRD];
 List<Bird> birds;
@@ -45,11 +45,15 @@ int simu_init(int ScreenWidth, int ScreenHeight)
 	for (int i = 0; i < nBirds; i++)
 		birds.put(0,0,0);
 
-	double range = 0.8;
+	for (int i = 0; i < nBirds; i++)
+		birds[i].sight = 0.6;
+
+	double range = 0.1;
 	for (int i = 0; i < nBirds; i++)
 		birds[i].setl(range*rand()/RAND_MAX-range/2,
 		              range*rand()/RAND_MAX-range/2,
-		              range*rand()/RAND_MAX-range/2);
+		              //range*rand()/RAND_MAX-range/2);
+		              0);
 
 	for (int i = 0; i < nBirds; i++)
 		birds[i].ctrl.load(&birds[i], ctrl_dir);

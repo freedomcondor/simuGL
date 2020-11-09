@@ -71,6 +71,7 @@ int setneighbour(lua_State *L)
 
 	lua_getglobal(L, "bird");
 	lua_setTableNumber(L, "sight", bird->sight);
+	lua_setTableVector3(L, "mySpeed", bird->v);
 	lua_pushstring(L, "neighbours");
 		lua_newtable(L);
 			lua_setTableNumber(L, "n", bird->nNeighbours);

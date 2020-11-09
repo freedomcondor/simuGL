@@ -10,18 +10,35 @@ end
 
 function step(time)
 	-- create vector3s
+	bird.mySpeed = Vec3:create(bird.mySpeed.x, bird.mySpeed.y, bird.mySpeed.z)
 	for i, nei in ipairs(bird.neighbours) do
 		nei.loc = Vec3:create(nei.loc.x, nei.loc.y, nei.loc.z)
 		nei.speed = Vec3:create(nei.speed.x, nei.speed.y, nei.speed.z) 
 	end
 
-	testModel(time)
+	--testModel(time)
 	--zonesModel(time)
 	--vicsekModel(time)
+	hex_2D(time)
 end
 
 function exit()
 	print("i am exit")
+end
+
+function hex_2D(time)
+	local desired = 0.2
+	local speed = Vec3:create()
+
+	for i, nei in ipairs(bird.neighbours) do
+		if desired - nei.loc:len() < 0 then
+			speed = speed - ( desired - nei.loc:len() ) * nei.loc:nor()
+		else
+			speed = speed - 2 * ( desired - nei.loc:len() ) * nei.loc:nor()
+		end
+	end
+
+	bird.setspeed(bird.mySpeed * 0.98 + 8 * speed * time)
 end
 
 function testModel(time)

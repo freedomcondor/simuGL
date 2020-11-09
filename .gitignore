@@ -1,2 +1,4 @@
 build
 examples/*/build
+.DS_Store
+*/.DS_Store
